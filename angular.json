@@ -118,6 +118,41 @@
           }
         }
       }
+    },
+    "@rodrigowba/env": {
+      "projectType": "library",
+      "root": "projects/rodrigowba/env",
+      "sourceRoot": "projects/rodrigowba/env/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/rodrigowba/env/tsconfig.lib.json",
+            "project": "projects/rodrigowba/env/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/rodrigowba/env/src/test.ts",
+            "tsConfig": "projects/rodrigowba/env/tsconfig.spec.json",
+            "karmaConfig": "projects/rodrigowba/env/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/rodrigowba/env/tsconfig.lib.json",
+              "projects/rodrigowba/env/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }},
   "defaultProject": "angular-utils"
 }

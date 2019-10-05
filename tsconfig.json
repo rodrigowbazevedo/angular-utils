@@ -17,6 +17,14 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@rodrigowba/env": [
+        "dist/rodrigowba/env"
+      ],
+      "@rodrigowba/env/*": [
+        "dist/rodrigowba/env/*"
+      ]
+    }
   }
 }
