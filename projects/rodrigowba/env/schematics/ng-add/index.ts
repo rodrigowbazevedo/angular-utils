@@ -13,7 +13,8 @@ import {
   WorkspaceProject,
   WorkspaceSchema,
   getWorkspace,
-  getWorkspacePath
+  getWorkspacePath,
+  getIndexHtmlPath
 } from 'schematics-utilities';
 import { normalize, join } from '@angular-devkit/core';
 
@@ -61,7 +62,7 @@ export function addModule(options: any): Rule {
       // tree to modify
       host,
       // Module name to insert
-      'EnvModule',
+      'EnvModule.forRoot()',
       // project name for import statement
       '@rodrigowba/env',
       // project to be modified
@@ -106,7 +107,7 @@ export function addTemplate(options: any): Rule {
       }
     }
 
-    const indexPath = `${project.sourceRoot}/index.html`;
+    const indexPath = getIndexHtmlPath(project);
 
     if (host.exists(indexPath)) {
       let indexContent = (host.read(indexPath) || '').toString();
