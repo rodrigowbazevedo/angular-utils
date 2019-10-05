@@ -153,6 +153,41 @@
           }
         }
       }
+    },
+    "@rodrigowba/ngrx-persist": {
+      "projectType": "library",
+      "root": "projects/rodrigowba/ngrx-persist",
+      "sourceRoot": "projects/rodrigowba/ngrx-persist/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/rodrigowba/ngrx-persist/tsconfig.lib.json",
+            "project": "projects/rodrigowba/ngrx-persist/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/rodrigowba/ngrx-persist/src/test.ts",
+            "tsConfig": "projects/rodrigowba/ngrx-persist/tsconfig.spec.json",
+            "karmaConfig": "projects/rodrigowba/ngrx-persist/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/rodrigowba/ngrx-persist/tsconfig.lib.json",
+              "projects/rodrigowba/ngrx-persist/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }},
   "defaultProject": "angular-utils"
 }

@@ -24,6 +24,12 @@
       ],
       "@rodrigowba/env/*": [
         "dist/rodrigowba/env/*"
+      ],
+      "@rodrigowba/ngrx-persist": [
+        "dist/rodrigowba/ngrx-persist"
+      ],
+      "@rodrigowba/ngrx-persist/*": [
+        "dist/rodrigowba/ngrx-persist/*"
       ]
     }
   }
