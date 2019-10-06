@@ -30,6 +30,12 @@
       ],
       "@rodrigowba/ngrx-persist/*": [
         "dist/rodrigowba/ngrx-persist/*"
+      ],
+      "@rodrigowba/http-common": [
+        "dist/rodrigowba/http-common"
+      ],
+      "@rodrigowba/http-common/*": [
+        "dist/rodrigowba/http-common/*"
       ]
     }
   }

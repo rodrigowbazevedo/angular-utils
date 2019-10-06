@@ -9,7 +9,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "package:env": "sh package-env.sh",
-    "package:ngrx-persist": "sh package-ngrx-persist.sh"
+    "package:ngrx-persist": "sh package-ngrx-persist.sh",
+    "package:http-common": "sh package-http-common.sh"
   },
   "private": true,
   "dependencies": {
@@ -21,7 +22,9 @@
     "@angular/platform-browser": "~8.0.0",
     "@angular/platform-browser-dynamic": "~8.0.0",
     "@angular/router": "~8.0.0",
+    "@ngrx/entity": "^8.3.0",
     "@ngrx/store": "^8.3.0",
+    "json-hash": "^1.2.0",
     "kv-storage-polyfill": "^2.0.0",
     "lodash": "^4.17.15",
     "rxjs": "~6.4.0",
