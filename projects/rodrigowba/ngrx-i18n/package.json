@@ -1,0 +1,14 @@
+{
+  "name": "@rodrigowba/ngrx-i18n",
+  "version": "0.1.0",
+  "schematics": "./collection.json",
+  "peerDependencies": {
+    "@angular/common": "^8.0.3",
+    "@angular/core": "^8.0.3",
+    "@ngrx/store": "^8.0.1",
+    "lodash": "^4.17.15"
+  },
+  "dependencies": {
+    "schematics-utilities": "^1.1.3"
+  }
+}

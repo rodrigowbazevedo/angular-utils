@@ -10,7 +10,7 @@
     "e2e": "ng e2e",
     "package:env": "sh package-env.sh",
     "package:ngrx-persist": "sh package-ngrx-persist.sh",
-    "package:http-common": "sh package-http-common.sh"
+    "package:ngrx-i18n": "sh package-ngrx-i18n.sh",
   },
   "private": true,
   "dependencies": {
