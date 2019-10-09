@@ -223,6 +223,42 @@
           }
         }
       }
+    },
+    "@rodrigowba/observer-component": {
+      "projectType": "library",
+      "root": "projects/rodrigowba/observer-component",
+      "sourceRoot": "projects/rodrigowba/observer-component/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/rodrigowba/observer-component/tsconfig.lib.json",
+            "project": "projects/rodrigowba/observer-component/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/rodrigowba/observer-component/src/test.ts",
+            "tsConfig": "projects/rodrigowba/observer-component/tsconfig.spec.json",
+            "karmaConfig": "projects/rodrigowba/observer-component/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/rodrigowba/observer-component/tsconfig.lib.json",
+              "projects/rodrigowba/observer-component/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
     "@rodrigowba/ngrx-i18n": {
       "projectType": "library",
       "root": "projects/rodrigowba/ngrx-i18n",

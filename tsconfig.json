@@ -36,6 +36,18 @@
       ],
       "@rodrigowba/http-common/*": [
         "dist/rodrigowba/http-common/*"
+      ],
+      "@rodrigowba/observer-component": [
+        "dist/rodrigowba/observer-component"
+      ],
+      "@rodrigowba/observer-component/*": [
+        "dist/rodrigowba/observer-component/*"
+      ],
+      "@rodrigowba/ngrx-i18n": [
+        "dist/rodrigowba/ngrx-i18n"
+      ],
+      "@rodrigowba/ngrx-i18n/*": [
+        "dist/rodrigowba/ngrx-i18n/*"
       ]
     }
   }

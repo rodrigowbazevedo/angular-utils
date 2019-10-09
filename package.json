@@ -11,6 +11,8 @@
     "package:env": "sh package-env.sh",
     "package:ngrx-persist": "sh package-ngrx-persist.sh",
     "package:ngrx-i18n": "sh package-ngrx-i18n.sh",
+    "package:http-common": "sh package-http-common.sh",
+    "package:observer-component": "sh package-observer-component.sh"
   },
   "private": true,
   "dependencies": {
