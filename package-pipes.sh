@@ -1,3 +1,3 @@
 #!/bin/bash
 
-ng build @rodrigowba/pipes
+ng build @rodrigowba/pipes --prod

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ng build @rodrigowba/ngrx-i18n
+ng build @rodrigowba/ngrx-i18n --prod
 
 echo "Building Schematics"
 
