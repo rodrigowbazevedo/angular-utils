@@ -6,7 +6,7 @@ import { storage } from 'kv-storage-polyfill';
 import { isEqual } from 'lodash';
 
 import { FeatureConfig, PersistedState } from './models';
-import { StoredState } from './actions';
+import { storedState } from './actions';
 import { BUILD_ID } from './tokens';
 
 @Injectable({
@@ -52,7 +52,7 @@ export class PersistenceService {
                 return { feature: name };
             }),
             tap((data: PersistedState<T> | undefined) => {
-                this.store.dispatch(new StoredState<T>(data));
+                this.store.dispatch(storedState(data));
             }),
             switchMap(() => this.store.pipe(
                 select(featureSelector),
