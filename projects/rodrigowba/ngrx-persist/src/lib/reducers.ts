@@ -1,14 +1,13 @@
-import { createReducer, on } from '@ngrx/store';
+import { on } from '@ngrx/store';
 import { storedState } from './actions';
 import { StateWithPersistence } from './models';
 
-export function persistStateMetaReducer<T extends StateWithPersistence, U>(
+export function persistStateActions<T extends StateWithPersistence, U>(
     featureName: string,
     selector: (state: U) => T = null
 ) {
-    return createReducer(
-        null,
-        on(storedState, (state, payload) => {
+    return [
+        on(storedState, (state: T, payload) => {
             if (payload.feature !== featureName) {
                 return state;
             }
@@ -34,5 +33,5 @@ export function persistStateMetaReducer<T extends StateWithPersistence, U>(
                 fromCache: true
             };
         })
-    );
+    ];
 }
