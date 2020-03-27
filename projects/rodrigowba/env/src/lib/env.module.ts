@@ -5,7 +5,7 @@ import { EnvService } from './env.service';
 
 @NgModule({})
 export class EnvModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<EnvModule> {
     return {
       ngModule: EnvModule,
       providers: [
