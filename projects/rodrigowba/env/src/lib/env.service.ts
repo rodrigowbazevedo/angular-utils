@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
     providedIn: 'root'
 })
 export class EnvService {
-    get<T>(property: string) {
-        return (this[property] as T) || null;
+    get<T>(property: string, fallback: T = null) {
+        return (this[property] as T) || fallback;
     }
 }
