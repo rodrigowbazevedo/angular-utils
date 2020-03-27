@@ -135,13 +135,13 @@
           "options": {
             "tsConfig": "projects/rodrigowba/env/tsconfig.lib.json",
             "project": "projects/rodrigowba/env/ng-package.json"
-          }
-        ,          "configurations": {
+          },
+          "configurations": {
             "production": {
               "tsConfig": "projects/rodrigowba/env/tsconfig.lib.prod.json"
             }
           }
-},
+        },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -175,13 +175,13 @@
           "options": {
             "tsConfig": "projects/rodrigowba/ngrx-persist/tsconfig.lib.json",
             "project": "projects/rodrigowba/ngrx-persist/ng-package.json"
-          }
-        ,          "configurations": {
+          },
+          "configurations": {
             "production": {
               "tsConfig": "projects/rodrigowba/ngrx-persist/tsconfig.lib.prod.json"
             }
           }
-},
+        },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -215,13 +215,13 @@
           "options": {
             "tsConfig": "projects/rodrigowba/http-common/tsconfig.lib.json",
             "project": "projects/rodrigowba/http-common/ng-package.json"
-          }
-        ,          "configurations": {
+          },
+          "configurations": {
             "production": {
               "tsConfig": "projects/rodrigowba/http-common/tsconfig.lib.prod.json"
             }
           }
-},
+        },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -255,13 +255,13 @@
           "options": {
             "tsConfig": "projects/rodrigowba/observer-component/tsconfig.lib.json",
             "project": "projects/rodrigowba/observer-component/ng-package.json"
-          }
-        ,          "configurations": {
+          },
+          "configurations": {
             "production": {
               "tsConfig": "projects/rodrigowba/observer-component/tsconfig.lib.prod.json"
             }
           }
-},
+        },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -295,13 +295,13 @@
           "options": {
             "tsConfig": "projects/rodrigowba/ngrx-i18n/tsconfig.lib.json",
             "project": "projects/rodrigowba/ngrx-i18n/ng-package.json"
-          }
-        ,          "configurations": {
+          },
+          "configurations": {
             "production": {
               "tsConfig": "projects/rodrigowba/ngrx-i18n/tsconfig.lib.prod.json"
             }
           }
-},
+        },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -335,13 +335,13 @@
           "options": {
             "tsConfig": "projects/rodrigowba/pipes/tsconfig.lib.json",
             "project": "projects/rodrigowba/pipes/ng-package.json"
-          }
-        ,          "configurations": {
+          },
+          "configurations": {
             "production": {
               "tsConfig": "projects/rodrigowba/pipes/tsconfig.lib.prod.json"
             }
           }
-},
+        },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -375,13 +375,13 @@
           "options": {
             "tsConfig": "projects/rodrigowba/form-utils/tsconfig.lib.json",
             "project": "projects/rodrigowba/form-utils/ng-package.json"
-          }
-        ,          "configurations": {
+          },
+          "configurations": {
             "production": {
               "tsConfig": "projects/rodrigowba/form-utils/tsconfig.lib.prod.json"
             }
           }
-},
+        },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -403,6 +403,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "angular-utils"
+    }
+  },
+  "defaultProject": "angular-utils",
+  "cli": {
+    "analytics": "7e644fd2-ad35-43e4-8f9a-955583a540ff"
+  }
 }
