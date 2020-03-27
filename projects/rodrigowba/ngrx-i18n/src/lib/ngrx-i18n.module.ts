@@ -2,9 +2,10 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 
 import { NgrxI18nRootModule } from './ngrx-i18n-root.module';
+import { NgrxI18nChildModule } from './ngrx-i18n-child.module';
 import { NgrxI18nService } from './ngrx-i18n.service';
-import { I18nPipe } from './pipes/i18n.pipe';
-import { DEFAULT_LANGUAGE } from './tokens';
+import { DEFAULT_LANGUAGE, MODULE_NAMESPACE, MODULE_TRANSLATIONS } from './tokens';
+import { Translation, defaultNamespace } from './ngrx-i18n.model';
 
 @NgModule({
     imports: [
@@ -12,12 +13,6 @@ import { DEFAULT_LANGUAGE } from './tokens';
     ],
     providers: [
         NgrxI18nService
-    ],
-    declarations: [
-        I18nPipe
-    ],
-    exports: [
-        I18nPipe
     ],
 })
 export class NgrxI18nModule {
@@ -29,6 +24,23 @@ export class NgrxI18nModule {
                 {
                     provide: DEFAULT_LANGUAGE,
                     useValue: defaultLanguage
+                },
+            ]
+        };
+    }
+
+    static forChild(translations: Translation[] = [], namespace = defaultNamespace): ModuleWithProviders<NgrxI18nChildModule> {
+        return {
+            ngModule: NgrxI18nChildModule,
+            providers: [
+                NgrxI18nService,
+                {
+                    provide: MODULE_TRANSLATIONS,
+                    useValue: translations,
+                },
+                {
+                    provide: MODULE_NAMESPACE,
+                    useValue: namespace,
                 },
             ]
         };

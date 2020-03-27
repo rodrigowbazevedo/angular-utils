@@ -1,6 +1,6 @@
 {
   "name": "@rodrigowba/ngrx-i18n",
-  "version": "0.1.0",
+  "version": "0.1.6",
   "schematics": "./collection.json",
   "peerDependencies": {
     "@angular/common": "^8.0.3",
