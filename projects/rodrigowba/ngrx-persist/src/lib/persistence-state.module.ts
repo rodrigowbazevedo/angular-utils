@@ -30,7 +30,7 @@ export class PersistStateModule {
         };
     }
 
-    static forFeature<T extends StateWithPersistence>(
+    static forFeature<T>(
         featureName: string,
         debounce = 5,
         reducer: FeatureReducer<T> = featureEmptyReducer

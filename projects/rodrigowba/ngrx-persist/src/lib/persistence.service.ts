@@ -5,7 +5,7 @@ import { distinctUntilChanged, debounceTime, map, shareReplay, tap, switchMap } 
 import { storage } from 'kv-storage-polyfill';
 import { isEqual } from 'lodash';
 
-import { FeatureConfig, StateWithPersistence, PersistedState } from './models';
+import { FeatureConfig, PersistedState } from './models';
 import { StoredState } from './actions';
 import { BUILD_ID } from './tokens';
 
@@ -23,7 +23,7 @@ export class PersistenceService {
         private store: Store<any>,
     ) { }
 
-    persistFeature<T extends StateWithPersistence>(config: FeatureConfig<T>): Observable<string> {
+    persistFeature<T>(config: FeatureConfig<T>): Observable<string> {
         const { name } = config;
 
         if (this.featureNames.indexOf(name) === -1) {
@@ -37,7 +37,7 @@ export class PersistenceService {
         return this.featureObservables[name];
     }
 
-    private getFeatureObservable<T extends StateWithPersistence>(config: FeatureConfig<T>): Observable<string> {
+    private getFeatureObservable<T>(config: FeatureConfig<T>): Observable<string> {
         const { name, reducer } = config;
         const key = `state.${name}`;
 

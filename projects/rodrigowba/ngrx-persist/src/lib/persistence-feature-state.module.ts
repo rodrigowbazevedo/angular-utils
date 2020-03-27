@@ -3,10 +3,10 @@ import { merge } from 'rxjs';
 
 import { PersistenceService } from './persistence.service';
 import { FEATURE_CONFIG } from './tokens';
-import { FeatureConfig, StateWithPersistence } from './models';
+import { FeatureConfig } from './models';
 
 @NgModule({})
-export class PersistFeatureStateModule<T extends StateWithPersistence> {
+export class PersistFeatureStateModule<T> {
     constructor(
         @Inject(FEATURE_CONFIG) configs: FeatureConfig<any>[],
         persistenceService: PersistenceService

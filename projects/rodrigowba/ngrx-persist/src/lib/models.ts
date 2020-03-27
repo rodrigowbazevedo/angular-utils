@@ -4,15 +4,15 @@ export interface StateWithPersistence {
     fromCache: boolean;
 }
 
-export type FeatureReducer<T extends StateWithPersistence> = (state: T) => T;
+export type FeatureReducer<T> = (state: T) => T;
 
-export interface FeatureConfig<T extends StateWithPersistence> {
+export interface FeatureConfig<T> {
     name: string;
     reducer: FeatureReducer<T>;
     debounce: number;
 }
 
-export interface PersistedState<T extends StateWithPersistence> {
+export interface PersistedState<T> {
     feature: string;
     build?: string;
     state?: T;

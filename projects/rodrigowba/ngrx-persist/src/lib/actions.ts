@@ -1,11 +1,11 @@
 import { Action } from '@ngrx/store';
-import { PersistedState, StateWithPersistence } from './models';
+import { PersistedState } from './models';
 
 export enum AppStateActionTypes {
     StoredState = '[App State] Stored State',
 }
 
-export class StoredState<T extends StateWithPersistence> implements Action {
+export class StoredState<T> implements Action {
     readonly type = AppStateActionTypes.StoredState;
     constructor(public payload: PersistedState<T>) { }
 }
