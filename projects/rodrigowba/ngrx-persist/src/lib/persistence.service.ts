@@ -30,7 +30,7 @@ export class PersistenceService {
             this.featureNames = [...this.featureNames, name];
             this.featureObservables = {
                 ...this.featureObservables,
-                [name]: this.getFeatureObservable(config)
+                [name]: this.getFeatureObservable<T>(config)
             };
         }
 

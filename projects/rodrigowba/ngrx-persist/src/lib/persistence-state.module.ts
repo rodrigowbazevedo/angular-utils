@@ -3,7 +3,7 @@ import { StoreModule } from '@ngrx/store';
 
 import { PersistenceService } from './persistence.service';
 import { FEATURE_CONFIG, BUILD_ID } from './tokens';
-import { FeatureReducer, StateWithPersistence } from './models';
+import { FeatureReducer } from './models';
 import { PersistFeatureStateModule } from './persistence-feature-state.module';
 
 export function featureEmptyReducer<T>(state: T) {
@@ -34,7 +34,7 @@ export class PersistStateModule {
         featureName: string,
         debounce = 5,
         reducer: FeatureReducer<T> = featureEmptyReducer
-    ): ModuleWithProviders<PersistFeatureStateModule<T>> {
+    ): ModuleWithProviders<PersistFeatureStateModule> {
         return {
             ngModule: PersistFeatureStateModule,
             providers: [

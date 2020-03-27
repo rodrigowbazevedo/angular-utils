@@ -6,13 +6,13 @@ import { FEATURE_CONFIG } from './tokens';
 import { FeatureConfig } from './models';
 
 @NgModule({})
-export class PersistFeatureStateModule<T> {
+export class PersistFeatureStateModule {
     constructor(
         @Inject(FEATURE_CONFIG) configs: FeatureConfig<any>[],
         persistenceService: PersistenceService
     ) {
         merge(
-            ...configs.map(config => persistenceService.persistFeature<T>(config))
+            ...configs.map(config => persistenceService.persistFeature(config))
         ).subscribe();
     }
 }
