@@ -293,6 +293,76 @@
           }
         }
       }
+    },
+    "@rodrigowba/pipes": {
+      "projectType": "library",
+      "root": "projects/rodrigowba/pipes",
+      "sourceRoot": "projects/rodrigowba/pipes/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/rodrigowba/pipes/tsconfig.lib.json",
+            "project": "projects/rodrigowba/pipes/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/rodrigowba/pipes/src/test.ts",
+            "tsConfig": "projects/rodrigowba/pipes/tsconfig.spec.json",
+            "karmaConfig": "projects/rodrigowba/pipes/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/rodrigowba/pipes/tsconfig.lib.json",
+              "projects/rodrigowba/pipes/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "@rodrigowba/form-utils": {
+      "projectType": "library",
+      "root": "projects/rodrigowba/form-utils",
+      "sourceRoot": "projects/rodrigowba/form-utils/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/rodrigowba/form-utils/tsconfig.lib.json",
+            "project": "projects/rodrigowba/form-utils/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/rodrigowba/form-utils/src/test.ts",
+            "tsConfig": "projects/rodrigowba/form-utils/tsconfig.spec.json",
+            "karmaConfig": "projects/rodrigowba/form-utils/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/rodrigowba/form-utils/tsconfig.lib.json",
+              "projects/rodrigowba/form-utils/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }},
   "defaultProject": "angular-utils"
 }

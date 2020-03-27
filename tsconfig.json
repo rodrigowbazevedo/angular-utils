@@ -48,6 +48,18 @@
       ],
       "@rodrigowba/ngrx-i18n/*": [
         "dist/rodrigowba/ngrx-i18n/*"
+      ],
+      "@rodrigowba/pipes": [
+        "dist/rodrigowba/pipes"
+      ],
+      "@rodrigowba/pipes/*": [
+        "dist/rodrigowba/pipes/*"
+      ],
+      "@rodrigowba/form-utils": [
+        "dist/rodrigowba/form-utils"
+      ],
+      "@rodrigowba/form-utils/*": [
+        "dist/rodrigowba/form-utils/*"
       ]
     }
   }
