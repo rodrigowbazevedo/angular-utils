@@ -2,12 +2,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { throwError, Observable, pipe } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
-import { DefaultResponse, FormValidationResponse } from './model';
+import { DefaultResponse } from './model';
 
 export const responseStatus = <T extends DefaultResponse>() => map((response: T): T => {
-    if (!response.status) {
+    if (!response.success) {
         throw {
-            status: false,
+            success: false,
             message: response.message || 'Erro inexperado'
         } as DefaultResponse;
     }
@@ -18,7 +18,7 @@ export const responseStatus = <T extends DefaultResponse>() => map((response: T)
 export const catchResponse = (err: HttpErrorResponse): Observable<never> => {
     if (err.error instanceof Error) {
         return throwError({
-            status: false,
+            success: false,
             message: 'Erro inexperado'
         } as DefaultResponse);
     }

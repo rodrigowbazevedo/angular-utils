@@ -11,3 +11,5 @@ export * from './lib/request/helpers';
 export * from './lib/pagination/model';
 export * from './lib/pagination/actions';
 export * from './lib/pagination/reducers';
+
+export * from './lib/timestamps/model';

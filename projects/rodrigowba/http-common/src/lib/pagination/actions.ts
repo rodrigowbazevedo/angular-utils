@@ -9,12 +9,12 @@ export enum PaginationActionTypes {
 
 export class LoadPagination implements Action {
     readonly type = PaginationActionTypes.LoadPagination;
-    constructor(public payload: Pagination) {}
+    constructor(public payload: Pagination<Filters>) {}
 }
 
 export class PaginationLoaded implements Action {
     readonly type = PaginationActionTypes.PaginationLoaded;
-    constructor(public payload: Pagination) {}
+    constructor(public payload: Pagination<Filters>) {}
 }
 
 export class ResetPagination implements Action {

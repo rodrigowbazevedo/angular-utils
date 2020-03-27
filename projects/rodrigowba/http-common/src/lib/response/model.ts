@@ -1,5 +1,5 @@
 export interface DefaultResponse {
-    status: boolean;
+    success: boolean;
     message?: string;
 }
 

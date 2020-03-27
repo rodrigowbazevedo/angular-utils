@@ -13,8 +13,8 @@ export interface PaginationMetadata {
 export interface Filters {
 }
 
-export interface Pagination {
-    filters: Filters;
+export interface Pagination<T extends Filters> {
+    filters: T;
     metadata: PaginationMetadata | null;
     ids: Array<string | number>;
 }
@@ -34,7 +34,7 @@ export class InitialPaginationMetadata implements PaginationMetadata {
 export interface PaginationDataResponse<T> extends ResponseDataList<T>, PaginationMetadata {
 }
 
-export interface PaginationData<T> {
-    pagination: Pagination;
+export interface PaginationData<T, U> {
+    pagination: Pagination<U>;
     data: T[];
 }
