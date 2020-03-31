@@ -4,31 +4,23 @@ import { StateWithPersistence } from './models';
 
 export function persistStateActions<T extends StateWithPersistence, U>(
     featureName: string,
-    selector: (state: U) => T = null
+    selector: (state: T | U) => T = (state) => state as T
 ) {
     return [
-        on(storedState, (state: T, payload) => {
+        on(storedState, (state: T | U, payload) => {
             if (payload.feature !== featureName) {
                 return state;
             }
 
             if (typeof payload.state === 'undefined') {
                 return {
-                    ...state,
+                    ...selector(state),
                     loaded: true
                 };
             }
 
-            if (selector !== null) {
-                return {
-                    ...selector(payload.state as U),
-                    loaded: true,
-                    fromCache: true
-                };
-            }
-
             return {
-                ...payload.state as T,
+                ...selector(payload.state),
                 loaded: true,
                 fromCache: true
             };
