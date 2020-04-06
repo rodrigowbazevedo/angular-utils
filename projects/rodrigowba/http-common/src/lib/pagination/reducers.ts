@@ -7,6 +7,7 @@ import {
     Pagination,
     Filters,
     PaginationDataResponse,
+    PaginationResourceResponse,
     InitialPaginationMetadata,
     PaginationData,
     PaginationMetadata
@@ -19,12 +20,6 @@ export interface PaginationState<T> extends EntityState<Pagination<T>> {
 export const getFiltersHash = <T extends Filters>(filters: T): string => {
     return hash.digest(filters);
 };
-
-/* const paginationAdapter: EntityAdapter<Pagination<Filters>> = createEntityAdapter<Pagination<Filters>>({
-    selectId: (pagination: Pagination<Filters>) => getFiltersHash(pagination.filters)
-}); */
-
-// const paginationInitialState: PaginationState<Filters> = paginationAdapter.getInitialState();
 
 export const selectPagination = <T extends Filters>(filters: T) => {
     const pageHash  = getFiltersHash(filters);
@@ -89,65 +84,38 @@ export const upsertPagination = <T extends Filters>(pagination: Pagination<T>) =
 };
 
 export function paginationReducer<T extends Filters>() {
-    const paginationAdapter: EntityAdapter<Pagination<T>> = createEntityAdapter<Pagination<T>>({
-        selectId: (pagination: Pagination<T>) => getFiltersHash(pagination.filters)
+    const paginationAdapter: EntityAdapter<Pagination<Filters>> = createEntityAdapter<Pagination<Filters>>({
+        selectId: (pagination: Pagination<Filters>) => getFiltersHash(pagination.filters)
     });
 
     const initialState = paginationAdapter.getInitialState();
 
     return (
-        state: PaginationState<T> = initialState,
+        state: PaginationState<Filters> = initialState,
         action: PaginationActions | null = null
     ): PaginationState<T> => {
         if (action === null) {
-            return state;
+            return state as PaginationState<T>;
         }
 
         switch (action.type) {
             case PaginationActionTypes.LoadPagination:
-                return paginationAdapter.upsertOne(action.payload, state);
+                return paginationAdapter.upsertOne(action.payload, state) as PaginationState<T>;
             case PaginationActionTypes.PaginationLoaded:
                 return paginationAdapter.upsertOne(
-                        upsertPagination<T>(action.payload)(state),
+                        upsertPagination<Filters>(action.payload)(state),
                         state
-                    );
+                    ) as PaginationState<T>;
             case PaginationActionTypes.ResetPagination:
                 return paginationAdapter.upsertOne(
-                        resetPagination<T>(action.payload)(state),
+                        resetPagination<Filters>(action.payload)(state),
                         state
-                    );
+                    )  as PaginationState<T>;
             default:
-                return state;
+                return state as PaginationState<T>;
         }
     };
 }
-
-/* export function paginationReducer<T extends Filters>(
-    state: PaginationState<T>,
-    action: PaginationActions | null = null
-): PaginationState<T> {
-    if (action === null) {
-        return state;
-    }
-
-    switch (action.type) {
-        case PaginationActionTypes.LoadPagination:
-            return paginationAdapter.upsertOne(action.payload, state);
-        case PaginationActionTypes.PaginationLoaded:
-            return paginationAdapter.upsertOne(
-                    upsertPagination(action.payload)(state),
-                    state
-                );
-        case PaginationActionTypes.ResetPagination:
-            return paginationAdapter.upsertOne(
-                    resetPagination(action.payload)(state),
-                    state
-                );
-        default:
-            return state;
-    }
-} */
-
 
 export const getLastPageLoaded = <T extends Filters>(pagination: Pagination<T>): number => {
     return pagination.metadata.current_page;
@@ -215,6 +183,24 @@ export const paginationResponseFromPageResponse = <T extends object, U extends F
         pagination: {
             filters,
             metadata: metadata as PaginationMetadata,
+            ids: data.map(selectId)
+        },
+        data
+    };
+};
+
+export const paginationResponseFromResourceResponse = <T extends object, U extends Filters>(
+    pageResponse: PaginationResourceResponse<T>,
+    filters: U,
+// tslint:disable-next-line: no-string-literal
+    selectId = (entity: T) => entity['id']
+): PaginationData<T, U> => {
+    const { data, meta } = pageResponse;
+
+    return {
+        pagination: {
+            filters,
+            metadata: meta,
             ids: data.map(selectId)
         },
         data

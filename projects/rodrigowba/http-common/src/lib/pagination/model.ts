@@ -34,6 +34,10 @@ export class InitialPaginationMetadata implements PaginationMetadata {
 export interface PaginationDataResponse<T> extends ResponseDataList<T>, PaginationMetadata {
 }
 
+export interface PaginationResourceResponse<T> extends ResponseDataList<T> {
+    meta: PaginationMetadata;
+}
+
 export interface PaginationData<T, U> {
     pagination: Pagination<U>;
     data: T[];
