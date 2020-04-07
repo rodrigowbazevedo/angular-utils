@@ -88,14 +88,14 @@ export function paginationReducer<T extends Filters>() {
         selectId: (pagination: Pagination<Filters>) => getFiltersHash(pagination.filters)
     });
 
-    const initialState = paginationAdapter.getInitialState();
+    const initialState = paginationAdapter.getInitialState() as PaginationState<T>;
 
     return (
-        state: PaginationState<Filters> = initialState,
+        state: PaginationState<T> = initialState,
         action: PaginationActions | null = null
     ): PaginationState<T> => {
         if (action === null) {
-            return state as PaginationState<T>;
+            return state;
         }
 
         switch (action.type) {
