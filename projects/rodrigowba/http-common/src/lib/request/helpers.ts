@@ -1,5 +1,6 @@
 import { HttpParams } from '@angular/common/http';
-import { PaginationRequestParams } from './model';
+import { PaginationRequestParams, FilteredPaginationRequest } from './model';
+import { Filters, Pagination } from '../pagination/model';
 
 export const insertPaginationParams = (params: HttpParams, pagination: PaginationRequestParams): HttpParams => {
     if (typeof pagination.page === 'number') {
@@ -19,4 +20,16 @@ export const insertPaginationParams = (params: HttpParams, pagination: Paginatio
     }
 
     return params;
+};
+
+export const buildFilteredPaginationRequest = <T extends Filters>(params: PaginationRequestParams = {}) => {
+    return (pagination: Pagination<T>): FilteredPaginationRequest<T> => {
+        return {
+            filters: pagination.filters,
+            pagination: {
+                ...params,
+                page: pagination.metadata.current_page
+              }
+        };
+    };
 };
