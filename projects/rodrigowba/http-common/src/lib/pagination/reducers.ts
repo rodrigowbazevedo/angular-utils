@@ -117,6 +117,8 @@ export function paginationReducer<T extends Filters>() {
     };
 }
 
+// export const
+
 export const getLastPageLoaded = <T extends Filters>(pagination: Pagination<T>): number => {
     return pagination.metadata.current_page;
 };
@@ -219,7 +221,7 @@ export const isInitialPagination = <T extends Filters>() => (source: Observable<
 );
 
 // tslint:disable-next-line: max-line-length
-export const filterPaginationScrollPosition = <T extends Filters>(index: number) => (source: Observable<Pagination<T>>): Observable<T> => source.pipe(
+export const filterPaginationScrollPosition = <T extends Filters>(index: number, margin = 0.3) => (source: Observable<Pagination<T>>): Observable<T> => source.pipe(
     switchMap((pagination: Pagination<T>) => of({}).pipe(
         map(() => Math.ceil(index / pagination.metadata.per_page)),
         filter(page => page <= pagination.metadata.last_page),
@@ -228,7 +230,7 @@ export const filterPaginationScrollPosition = <T extends Filters>(index: number)
         map(() => {
             const div = index % pagination.metadata.per_page;
 
-            return (div >= pagination.metadata.per_page * 0.3);
+            return (div >= pagination.metadata.per_page * margin);
         }),
         distinctUntilChanged(),
         filter(limit => limit),
