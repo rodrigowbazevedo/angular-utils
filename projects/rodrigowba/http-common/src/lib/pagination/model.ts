@@ -9,8 +9,10 @@ export interface PaginationMetadata {
     per_page: number;
 }
 
-// tslint:disable-next-line: no-empty-interface
 export interface Filters {
+    perPage?: number;
+    orderBy?: string;
+    order?: 'ASC' | `DESC`;
 }
 
 export interface Pagination<T extends Filters> {

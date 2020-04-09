@@ -24,12 +24,28 @@ export const insertPaginationParams = (params: HttpParams, pagination: Paginatio
 
 export const buildFilteredPaginationRequest = <T extends Filters>(params: PaginationRequestParams = {}) => {
     return (pagination: Pagination<T>): FilteredPaginationRequest<T> => {
+        const { filters } = pagination;
+
+        const requestParams: PaginationRequestParams = {
+            ...params,
+            page: pagination.metadata.current_page
+        };
+
+        if (typeof filters.perPage === 'number') {
+            requestParams.perPage = filters.perPage;
+        }
+
+        if (typeof filters.orderBy === 'string') {
+            requestParams.orderBy = filters.orderBy;
+        }
+
+        if (typeof filters.order === 'string') {
+            requestParams.order = filters.order;
+        }
+
         return {
-            filters: pagination.filters,
-            pagination: {
-                ...params,
-                page: pagination.metadata.current_page
-              }
+            filters,
+            pagination: requestParams
         };
     };
 };
