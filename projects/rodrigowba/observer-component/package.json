@@ -1,9 +1,9 @@
 {
   "name": "@rodrigowba/observer-component",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "peerDependencies": {
     "@angular/common": "~9.1.0",
     "@angular/core": "~9.1.0",
-    "@rodrigowba/http-common": "0.0.7"
+    "@rodrigowba/http-common": "0.0.10"
   }
 }

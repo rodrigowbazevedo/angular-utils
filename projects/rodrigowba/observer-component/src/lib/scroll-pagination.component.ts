@@ -8,6 +8,8 @@ import { Pagination, Filters, isInitialPagination, filterPaginationScrollPositio
 export abstract class ScrollPaginationComponent extends ObserverComponent implements OnInit {
     private scrollIndex$: Subject<number>;
 
+    margin = 0.3;
+
     ngOnInit() {
         this.scrollIndex$ = this.unsubscribe<number>(new BehaviorSubject(0));
     }
@@ -24,7 +26,7 @@ export abstract class ScrollPaginationComponent extends ObserverComponent implem
             this.scrollIndex$.pipe(
                 distinctUntilChanged(),
                 switchMap(index => pagination$.pipe(
-                    filterPaginationScrollPosition<T>(index)
+                    filterPaginationScrollPosition<T>(index, this.margin)
                 )),
             )
         ).pipe(
