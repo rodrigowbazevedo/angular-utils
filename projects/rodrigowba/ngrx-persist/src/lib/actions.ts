@@ -6,3 +6,8 @@ export const storedState = createAction(
     props<PersistedState<any>>()
 );
 
+export const syncState = createAction(
+    '[App State] Synced State',
+    props<PersistedState<any>>()
+);
+

@@ -10,6 +10,7 @@ export interface FeatureConfig<T> {
     name: string;
     reducer: FeatureReducer<T>;
     debounce: number;
+    sync?: boolean;
 }
 
 export interface PersistedState<T> {

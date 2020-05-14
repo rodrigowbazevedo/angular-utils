@@ -1,5 +1,5 @@
 import { on } from '@ngrx/store';
-import { storedState } from './actions';
+import { storedState, syncState } from './actions';
 import { StateWithPersistence } from './models';
 
 export function persistStateActions<T extends StateWithPersistence, U>(
@@ -24,6 +24,13 @@ export function persistStateActions<T extends StateWithPersistence, U>(
                 loaded: true,
                 fromCache: true
             };
+        }),
+        on(syncState, (state: T, payload) => {
+            if (payload.feature !== featureName) {
+                return state;
+            }
+
+            return selector(payload.state);
         })
     ];
 }

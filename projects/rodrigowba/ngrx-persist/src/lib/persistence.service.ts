@@ -1,12 +1,12 @@
 import { Injectable, Inject } from '@angular/core';
 import { Store, select, createFeatureSelector } from '@ngrx/store';
-import { Observable, from } from 'rxjs';
-import { distinctUntilChanged, debounceTime, map, shareReplay, tap, switchMap } from 'rxjs/operators';
+import { Observable, from, fromEvent } from 'rxjs';
+import { distinctUntilChanged, debounceTime, map, shareReplay, tap, switchMap, filter } from 'rxjs/operators';
 import { storage } from 'kv-storage-polyfill';
 import { isEqual } from 'lodash';
 
 import { FeatureConfig, PersistedState } from './models';
-import { storedState } from './actions';
+import { storedState, syncState } from './actions';
 import { BUILD_ID } from './tokens';
 
 @Injectable({
@@ -24,21 +24,46 @@ export class PersistenceService {
     ) { }
 
     persistFeature<T>(config: FeatureConfig<T>): Observable<string> {
-        const { name } = config;
+        const { name, sync } = config;
 
         if (this.featureNames.indexOf(name) === -1) {
             this.featureNames = [...this.featureNames, name];
             this.featureObservables = {
                 ...this.featureObservables,
-                [name]: this.getFeatureObservable<T>(config)
+                [name]: this.getFeatureObservable<T>(config),
             };
+
+            if (sync === true) {
+                this.featureObservables = {
+                    ...this.featureObservables,
+                    [`sync.${name}`]: this.getSyncObservable<T>(config),
+                };
+            }
         }
 
         return this.featureObservables[name];
     }
 
+    private getSyncObservable<T>(config: FeatureConfig<T>): Observable<string> {
+        const { name } = config;
+        const key = `state.${name}`;
+
+        return fromEvent(window, 'storage').pipe(
+            filter((e: StorageEvent) => e.key === key),
+            map(e => e.newValue),
+            distinctUntilChanged(),
+            switchMap(() => from(storage.get(key))),
+            tap((data: PersistedState<T> | undefined) => {
+                if (data && data.build === this.build) {
+                    this.store.dispatch(syncState(data));
+                }
+            }),
+            map(() => name)
+        );
+    }
+
     private getFeatureObservable<T>(config: FeatureConfig<T>): Observable<string> {
-        const { name, reducer } = config;
+        const { name, reducer, sync } = config;
         const key = `state.${name}`;
 
         const featureSelector = createFeatureSelector<T>(name);
@@ -66,6 +91,11 @@ export class PersistenceService {
                 state,
                 date: new Date()
             } as PersistedState<T>))),
+            tap(() => {
+                if (sync === true) {
+                    window.localStorage.setItem(key, Date.now().toString());
+                }
+            }),
             map(() => name),
             shareReplay<string>(1)
         );
