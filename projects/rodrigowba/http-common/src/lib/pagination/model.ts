@@ -27,10 +27,12 @@ export class InitialPaginationMetadata implements PaginationMetadata {
     // tslint:disable-next-line: variable-name
     public last_page = 1;
     public total = 0;
-    // tslint:disable-next-line: variable-name
-    public per_page = 1;
+
     public from = 0;
     public to = 1;
+
+    // tslint:disable-next-line: variable-name
+    constructor(public per_page = 1) {}
 }
 
 export interface PaginationDataResponse<T> extends ResponseDataList<T>, PaginationMetadata {

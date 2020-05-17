@@ -23,11 +23,12 @@ export const getFiltersHash = <T extends Filters>(filters: T): string => {
 
 export const selectPagination = <T extends Filters>(filters: T) => {
     const pageHash  = getFiltersHash(filters);
+    const perPage = filters?.perPage || 1;
 
     return (state: PaginationState<T>): Pagination<T> => {
         return state.entities[pageHash] || {
             filters,
-            metadata: new InitialPaginationMetadata(),
+            metadata: new InitialPaginationMetadata(perPage),
             ids: []
         };
     };
@@ -42,13 +43,15 @@ export const paginationInitialState = <T extends Filters>() => {
 };
 
 export const resetPagination = <T extends Filters>(filters: T) => {
+    const perPage = filters?.perPage || 1;
+
     return (state: PaginationState<T>): Pagination<T> => {
         const pagination = selectPagination(filters)(state);
 
         return {
             ...pagination,
             metadata: {
-                ...(new InitialPaginationMetadata()),
+                ...(new InitialPaginationMetadata(perPage)),
                 ...pagination.metadata,
                 current_page: 0
             },
