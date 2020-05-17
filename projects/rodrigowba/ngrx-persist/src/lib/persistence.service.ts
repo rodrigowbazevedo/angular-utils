@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { Store, select, createFeatureSelector } from '@ngrx/store';
-import { Observable, from, fromEvent } from 'rxjs';
+import { Observable, from, fromEvent, merge } from 'rxjs';
 import { distinctUntilChanged, debounceTime, map, shareReplay, tap, switchMap, filter } from 'rxjs/operators';
 import { storage } from 'kv-storage-polyfill';
 import { isEqual } from 'lodash';
@@ -28,17 +28,19 @@ export class PersistenceService {
 
         if (this.featureNames.indexOf(name) === -1) {
             this.featureNames = [...this.featureNames, name];
-            this.featureObservables = {
-                ...this.featureObservables,
-                [name]: this.getFeatureObservable<T>(config),
-            };
+
+            const observables = [
+                this.getFeatureObservable<T>(config)
+            ];
 
             if (sync === true) {
-                this.featureObservables = {
-                    ...this.featureObservables,
-                    [`sync.${name}`]: this.getSyncObservable<T>(config),
-                };
+                observables.push(this.getSyncObservable<T>(config));
             }
+
+            this.featureObservables = {
+                ...this.featureObservables,
+                [name]: merge(...observables)
+            };
         }
 
         return this.featureObservables[name];

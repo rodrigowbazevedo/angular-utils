@@ -33,7 +33,8 @@ export class PersistStateModule {
     static forFeature<T>(
         featureName: string,
         debounce = 5,
-        reducer: FeatureReducer<T> = featureEmptyReducer
+        reducer: FeatureReducer<T> = featureEmptyReducer,
+        sync = false
     ): ModuleWithProviders<PersistFeatureStateModule> {
         return {
             ngModule: PersistFeatureStateModule,
@@ -44,7 +45,8 @@ export class PersistStateModule {
                     useValue: {
                         name: featureName,
                         reducer,
-                        debounce
+                        debounce,
+                        sync
                     }
                 },
             ]
