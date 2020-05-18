@@ -1,36 +1,45 @@
-import { OnInit } from '@angular/core';
 import { BehaviorSubject, Observable, merge, Subject } from 'rxjs';
 import { distinctUntilChanged, switchMap, throttleTime } from 'rxjs/operators';
 
-import { ObserverComponent } from './observer.component';
+import { observerMixin, Observer } from './observer.component';
 import { Pagination, Filters, isInitialPagination, filterPaginationScrollPosition } from '@rodrigowba/http-common';
+import { Constructor } from './constructor';
 
-export abstract class ScrollPaginationComponent extends ObserverComponent implements OnInit {
-    private scrollIndex$: Subject<number>;
+export interface ScrollPagination extends Observer {
+    scrollIndex$: Subject<number>;
+    margin: number;
+    changeIndex(index: number): void;
+    selectToLoadPage<U extends Filters>(pagination$: Observable<Pagination<U>>): Observable<U>;
+}
 
-    margin = 0.3;
+export function scrollPaginationMixin<T extends Constructor<{}>>(BaseClass: T = (class {} as any)): Constructor<ScrollPagination> & T {
+    return class extends observerMixin(BaseClass) implements ScrollPagination {
+        scrollIndex$: Subject<number> = this.unsubscribe<number>(new BehaviorSubject(0));
 
-    ngOnInit() {
-        this.scrollIndex$ = this.unsubscribe<number>(new BehaviorSubject(0));
-    }
+        margin = 0.3;
 
-    changeIndex(index: number) {
-        this.scrollIndex$.next(index);
-    }
+        changeIndex(index: number) {
+            this.scrollIndex$.next(index);
+        }
 
-    selectToLoadPage<T extends Filters>(pagination$: Observable<Pagination<T>>): Observable<T> {
-        return merge<T>(
-            pagination$.pipe(
-                isInitialPagination<T>(),
-            ),
-            this.scrollIndex$.pipe(
-                distinctUntilChanged(),
-                switchMap(index => pagination$.pipe(
-                    filterPaginationScrollPosition<T>(index, this.margin)
-                )),
-            )
-        ).pipe(
-            throttleTime(200)
-        );
-    }
+        selectToLoadPage<U extends Filters>(pagination$: Observable<Pagination<U>>): Observable<U> {
+            return merge<U>(
+                pagination$.pipe(
+                    isInitialPagination<U>(),
+                ),
+                this.scrollIndex$.pipe(
+                    distinctUntilChanged(),
+                    switchMap(index => pagination$.pipe(
+                        filterPaginationScrollPosition<U>(index, this.margin)
+                    )),
+                )
+            ).pipe(
+                throttleTime(200)
+            );
+        }
+    };
+}
+
+export abstract class ScrollPaginationComponent extends scrollPaginationMixin() {
+
 }

@@ -2,27 +2,42 @@ import { OnDestroy } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-export abstract class ObserverComponent implements OnDestroy {
-    private subjects: Subject<any>[] = [];
+import { Constructor } from './constructor';
 
-    private destroy$: Subject<boolean> = new Subject<boolean>();
+export interface Observer extends OnDestroy {
+    subjects: Subject<any>[];
+    destroy$: Subject<boolean>;
+    observe<U>(observable: Observable<U>): Observable<U>;
+    unsubscribe<U>(subject: Subject<U>): Subject<U>;
+}
 
-    observe<T>(observable: Observable<T>): Observable<T> {
-        return observable.pipe(
-            takeUntil(this.destroy$)
-        );
-    }
+export function observerMixin<T extends Constructor<{}>>(BaseClass: T = (class {} as any)): Constructor<Observer> & T {
+    return class extends BaseClass implements Observer {
+        subjects: Subject<any>[] = [];
 
-    unsubscribe<T>(subject: Subject<T>): Subject<T> {
-        this.subjects.push(subject);
+        destroy$: Subject<boolean> = new Subject<boolean>();
 
-        return subject;
-    }
+        observe<U>(observable: Observable<U>): Observable<U> {
+            return observable.pipe(
+                takeUntil(this.destroy$)
+            );
+        }
 
-    ngOnDestroy() {
-        this.destroy$.next(true);
-        this.destroy$.unsubscribe();
+        unsubscribe<U>(subject: Subject<U>): Subject<U> {
+            this.subjects.push(subject);
 
-        this.subjects.forEach(subject => subject.unsubscribe());
-    }
+            return subject;
+        }
+
+        ngOnDestroy() {
+            this.destroy$.next(true);
+            this.destroy$.unsubscribe();
+
+            this.subjects.forEach(subject => subject.unsubscribe());
+        }
+    };
+}
+
+export abstract class ObserverComponent extends observerMixin() {
+
 }
