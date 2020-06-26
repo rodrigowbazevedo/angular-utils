@@ -1,9 +1,9 @@
 {
   "name": "@rodrigowba/pipes",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "peerDependencies": {
-    "@angular/common": "^8.0.3",
-    "@angular/core": "^8.0.3"
+    "@angular/common": "^10.0.0",
+    "@angular/core": "^10.0.0"
   },
   "dependencies": {
     "tslib": "^2.0.0"
