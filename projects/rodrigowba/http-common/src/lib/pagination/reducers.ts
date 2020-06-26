@@ -76,7 +76,10 @@ export const upsertPagination = <T extends Filters>(pagination: Pagination<T>) =
 
         const newIds = new Array(newMeta.total);
         newIds.splice(0, currentPagination.ids.length, ...currentPagination.ids);
-        newIds.splice((metadata.current_page - 1) * metadata.per_page, metadata.per_page, ...ids);
+
+        if (ids.length > 0) {
+            newIds.splice((metadata.current_page - 1) * metadata.per_page, ids.length, ...ids);
+        }
 
         return {
             filters,
@@ -147,6 +150,7 @@ export const toLoadPagination = <T extends Filters>(pagination: Pagination<T>): 
 
     return {
         ...pagination,
+        ids: [],
         metadata: {
             ...pagination.metadata,
             current_page: nextPage
@@ -173,7 +177,9 @@ export const getPaginationLoadedItens = <T extends Filters>(pagination: Paginati
 };
 
 export const getPaginationIds = <T extends Filters>(pagination: Pagination<T>): Array<string | number> => {
-    return pagination.ids.slice(0, getPaginationLoadedItens(pagination)).filter(id => typeof id !== 'undefined');
+    return pagination.ids.slice(0, getPaginationLoadedItens(pagination)).filter(
+        id => typeof id !== 'undefined' && id !== null
+    );
 };
 
 export const paginationResponseFromPageResponse = <T extends object, U extends Filters>(
