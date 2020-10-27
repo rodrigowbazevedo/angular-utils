@@ -14,7 +14,8 @@
     "package:http-common": "sh package-http-common.sh",
     "package:observer-component": "sh package-observer-component.sh",
     "package:pipes": "sh package-pipes.sh",
-    "package:form-utils": "sh package-form-utils.sh"
+    "package:form-utils": "sh package-form-utils.sh",
+    "package:rxjs-utils": "sh package-rxjs-utils.sh"
   },
   "private": true,
   "dependencies": {
@@ -28,6 +29,7 @@
     "@angular/router": "~10.0.0",
     "@ngrx/entity": "^9.2.0",
     "@ngrx/store": "^9.2.0",
+    "date-fns": "^2.15.0",
     "json-hash": "^1.2.0",
     "kv-storage-polyfill": "^2.0.0",
     "lodash": "^4.17.15",
@@ -42,6 +44,7 @@
     "@angular/cli": "~10.0.0",
     "@angular/compiler-cli": "~10.0.0",
     "@angular/language-service": "~10.0.0",
+    "@types/date-fns": "^2.6.0",
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.12.47",
