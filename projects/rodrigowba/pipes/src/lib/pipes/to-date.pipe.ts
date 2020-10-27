@@ -1,7 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import * as _moment from 'moment';
-
-const moment = _moment;
+import { parseISO } from 'date-fns';
 
 @Pipe({ name: 'toDate', pure: true })
 export class ToDatePipe implements PipeTransform  {
@@ -11,6 +9,6 @@ export class ToDatePipe implements PipeTransform  {
             return undefined;
         }
 
-        return moment(date).toDate();
+        return parseISO(date);
     }
 }
