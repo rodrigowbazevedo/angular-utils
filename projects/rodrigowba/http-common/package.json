@@ -1,6 +1,6 @@
 {
   "name": "@rodrigowba/http-common",
-  "version": "0.0.16",
+  "version": "0.1.0",
   "schematics": "./collection.json",
   "peerDependencies": {
     "@angular/common": "^10.0.0",

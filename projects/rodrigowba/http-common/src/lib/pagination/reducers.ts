@@ -1,4 +1,5 @@
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
+import { createReducer, on } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { filter, map, switchMap, distinctUntilChanged } from 'rxjs/operators';
 import * as hash from 'json-hash';
@@ -12,41 +13,41 @@ import {
     PaginationData,
     PaginationMetadata
 } from './model';
-import { PaginationActions, PaginationActionTypes } from './actions';
+import { paginationActions } from './actions';
 
-export interface PaginationState<T> extends EntityState<Pagination<T>> {
+export interface PaginationState<T, U extends Pagination<T> = Pagination<T>> extends EntityState<U> {
 }
 
 export const getFiltersHash = <T extends Filters>(filters: T): string => {
     return hash.digest(filters);
 };
 
-export const selectPagination = <T extends Filters>(filters: T) => {
+export const selectPagination = <T extends Filters, U extends Pagination<T> = Pagination<T>>(filters: T) => {
     const pageHash  = getFiltersHash(filters);
     const perPage = filters?.perPage || 1;
 
-    return (state: PaginationState<T>): Pagination<T> => {
+    return (state: PaginationState<T, U>): U => {
         return state.entities[pageHash] || {
             filters,
             metadata: new InitialPaginationMetadata(perPage),
             ids: []
-        };
+        } as U;
     };
 };
 
-export const paginationInitialState = <T extends Filters>() => {
-    const paginationAdapter: EntityAdapter<Pagination<T>> = createEntityAdapter<Pagination<T>>({
-        selectId: (pagination: Pagination<T>) => getFiltersHash(pagination.filters)
+export const paginationInitialState = <T extends Filters, U extends Pagination<T> = Pagination<T>>() => {
+    const paginationAdapter: EntityAdapter<U> = createEntityAdapter<U>({
+        selectId: (pagination: U) => getFiltersHash(pagination.filters)
     });
 
     return paginationAdapter.getInitialState();
 };
 
-export const resetPagination = <T extends Filters>(filters: T) => {
+export const resetPagination = <T extends Filters, U extends Pagination<T> = Pagination<T>>(filters: T) => {
     const perPage = filters?.perPage || 1;
 
-    return (state: PaginationState<T>): Pagination<T> => {
-        const pagination = selectPagination(filters)(state);
+    return (state: PaginationState<T, U>): U => {
+        const pagination = selectPagination<T, U>(filters)(state);
 
         return {
             ...pagination,
@@ -59,12 +60,12 @@ export const resetPagination = <T extends Filters>(filters: T) => {
     };
 };
 
-export const upsertPagination = <T extends Filters>(pagination: Pagination<T>) => {
+export const upsertPagination = <T extends Filters, U extends Pagination<T> = Pagination<T>>(pagination: U) => {
     const { filters, metadata, ids } = pagination;
 
-    return (state: PaginationState<T>): Pagination<T> => {
+    return (state: PaginationState<T, U>): U => {
 
-        const currentPagination = selectPagination(filters)(state);
+        const currentPagination = selectPagination<T, U>(filters)(state);
 
         const newMeta: PaginationMetadata = {
             ...metadata,
@@ -82,6 +83,7 @@ export const upsertPagination = <T extends Filters>(pagination: Pagination<T>) =
         }
 
         return {
+            ...currentPagination,
             filters,
             metadata: newMeta,
             ids: newIds
@@ -89,60 +91,61 @@ export const upsertPagination = <T extends Filters>(pagination: Pagination<T>) =
     };
 };
 
-export function paginationReducer<T extends Filters>() {
-    const paginationAdapter: EntityAdapter<Pagination<Filters>> = createEntityAdapter<Pagination<Filters>>({
-        selectId: (pagination: Pagination<Filters>) => getFiltersHash(pagination.filters)
+export function paginationReducer<T extends Filters, U extends Pagination<T> = Pagination<T>>() {
+    const paginationAdapter: EntityAdapter<U> = createEntityAdapter<U>({
+        selectId: (pagination: U) => getFiltersHash(pagination.filters)
     });
 
-    const initialState = paginationAdapter.getInitialState() as PaginationState<T>;
+    const initialState = paginationAdapter.getInitialState() as PaginationState<T, U>;
 
-    return (
-        state: PaginationState<T> = initialState,
-        action: PaginationActions | null = null
-    ): PaginationState<T> => {
-        if (action === null) {
-            return state;
-        }
+    const actions = paginationActions<T, U>();
 
-        switch (action.type) {
-            case PaginationActionTypes.LoadPagination:
-                return paginationAdapter.upsertOne(action.payload, state) as PaginationState<T>;
-            case PaginationActionTypes.PaginationLoaded:
-                return paginationAdapter.upsertOne(
-                        upsertPagination<Filters>(action.payload)(state),
-                        state
-                    ) as PaginationState<T>;
-            case PaginationActionTypes.ResetPagination:
-                return paginationAdapter.upsertOne(
-                        resetPagination<Filters>(action.payload)(state),
-                        state
-                    )  as PaginationState<T>;
-            default:
-                return state as PaginationState<T>;
-        }
+    const reducer = createReducer(
+        initialState,
+        on(
+            actions.loadPaginationAction,
+            (state, { payload }) => paginationAdapter.upsertOne(payload, state)
+        ),
+        on(
+            actions.paginationLoadedAction,
+            (state, { payload }) => paginationAdapter.upsertOne(
+                upsertPagination<T, U>(payload)(state),
+                state
+            )
+        ),
+        on(
+            actions.resetPaginationAction,
+            (state, { payload }) => paginationAdapter.upsertOne(
+                resetPagination<T, U>(payload)(state),
+                state
+            )
+        ),
+    );
+
+    return {
+        reducer,
+        actions
     };
 }
 
-// export const
-
-export const getLastPageLoaded = <T extends Filters>(pagination: Pagination<T>): number => {
+export const getLastPageLoaded = <T extends Filters, U extends Pagination<T> = Pagination<T>>(pagination: U): number => {
     return pagination.metadata.current_page;
 };
 
-export const getNextPage = <T extends Filters>(pagination: Pagination<T>): number | null => {
+export const getNextPage = <T extends Filters, U extends Pagination<T> = Pagination<T>>(pagination: U): number | null => {
     if (pagination.metadata === null || pagination.metadata.total === 0) {
         return 1;
     }
 
-    if (getLastPageLoaded(pagination) === pagination.metadata.last_page || pagination.metadata.last_page === 0) {
+    if (getLastPageLoaded<T, U>(pagination) === pagination.metadata.last_page || pagination.metadata.last_page === 0) {
         return null;
     }
 
-    return getLastPageLoaded(pagination) + 1;
+    return getLastPageLoaded<T, U>(pagination) + 1;
 };
 
-export const toLoadPagination = <T extends Filters>(pagination: Pagination<T>): Pagination<T> | null => {
-    const nextPage = getNextPage(pagination);
+export const toLoadPagination = <T extends Filters, U extends Pagination<T> = Pagination<T>>(pagination: U): U | null => {
+    const nextPage = getNextPage<T, U>(pagination);
 
     if (nextPage === null) {
         return null;
@@ -155,10 +158,10 @@ export const toLoadPagination = <T extends Filters>(pagination: Pagination<T>): 
             ...pagination.metadata,
             current_page: nextPage
         }
-    } as Pagination<T>;
+    };
 };
 
-export const getPaginationLoadedItens = <T extends Filters>(pagination: Pagination<T>): number => {
+export const getPaginationLoadedItens = <T extends Filters, U extends Pagination<T> = Pagination<T>>(pagination: U): number => {
     const { metadata } = pagination;
 
     if (metadata === null) {
@@ -176,18 +179,18 @@ export const getPaginationLoadedItens = <T extends Filters>(pagination: Paginati
     return metadata.per_page * metadata.current_page;
 };
 
-export const getPaginationIds = <T extends Filters>(pagination: Pagination<T>): Array<string | number> => {
+export const getPaginationIds = <T extends Filters, U extends Pagination<T> = Pagination<T>>(pagination: U): Array<string | number> => {
     return pagination.ids.slice(0, getPaginationLoadedItens(pagination)).filter(
         id => typeof id !== 'undefined' && id !== null
     );
 };
 
-export const paginationResponseFromPageResponse = <T extends object, U extends Filters>(
-    pageResponse: PaginationDataResponse<T>,
-    filters: U,
+export const paginationResponseFromPageResponse = <K extends object, T extends Filters, U extends Pagination<T> = Pagination<T>>(
+    pageResponse: PaginationDataResponse<K>,
+    filters: T,
 // tslint:disable-next-line: no-string-literal
-    selectId = (entity: T) => entity['id']
-): PaginationData<T, U> => {
+    selectId = (entity: K) => entity['id']
+): PaginationData<K, T, U> => {
     const { data, ...metadata } = pageResponse;
 
     return {
@@ -197,15 +200,15 @@ export const paginationResponseFromPageResponse = <T extends object, U extends F
             ids: data.map(selectId)
         },
         data
-    };
+    } as PaginationData<K, T, U>;
 };
 
-export const paginationResponseFromResourceResponse = <T extends object, U extends Filters>(
-    pageResponse: PaginationResourceResponse<T>,
-    filters: U,
+export const paginationResponseFromResourceResponse = <K extends object, T extends Filters, U extends Pagination<T> = Pagination<T>>(
+    pageResponse: PaginationResourceResponse<K>,
+    filters: T,
 // tslint:disable-next-line: no-string-literal
-    selectId = (entity: T) => entity['id']
-): PaginationData<T, U> => {
+    selectId = (entity: K) => entity['id']
+): PaginationData<K, T, U> => {
     const { data, meta } = pageResponse;
 
     return {
@@ -215,23 +218,29 @@ export const paginationResponseFromResourceResponse = <T extends object, U exten
             ids: data.map(selectId)
         },
         data
-    };
+    } as PaginationData<K, T, U>;
 };
 
-export const isInitialPagination = <T extends Filters>() => (source: Observable<Pagination<T>>): Observable<T> => source.pipe(
-    filter((pagination: Pagination<T>) => {
+export const isInitialPagination = <T extends Filters, U extends Pagination<T> = Pagination<T>>() => (
+    source: Observable<U>
+): Observable<T> => source.pipe(
+    filter((pagination: U) => {
         if (pagination.metadata === null) {
             return true;
         }
 
         return pagination.metadata.current_page === 0;
     }),
-    map(pagination => pagination.filters as T)
+    map(pagination => pagination.filters)
 );
 
-// tslint:disable-next-line: max-line-length
-export const filterPaginationScrollPosition = <T extends Filters>(index: number, margin = 0.3) => (source: Observable<Pagination<T>>): Observable<T> => source.pipe(
-    switchMap((pagination: Pagination<T>) => of({}).pipe(
+export const filterPaginationScrollPosition = <T extends Filters, U extends Pagination<T> = Pagination<T>>(
+    index: number,
+    margin = 0.3
+) => (
+    source: Observable<U>
+): Observable<T> => source.pipe(
+    switchMap((pagination: U) => of({}).pipe(
         map(() => Math.ceil(index / pagination.metadata.per_page)),
         filter(page => page <= pagination.metadata.last_page),
         filter(page => page >= pagination.metadata.current_page),
@@ -243,6 +252,6 @@ export const filterPaginationScrollPosition = <T extends Filters>(index: number,
         }),
         distinctUntilChanged(),
         filter(limit => limit),
-        map(() => pagination.filters as T),
+        map(() => pagination.filters),
     )),
 );

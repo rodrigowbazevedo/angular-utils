@@ -42,7 +42,7 @@ export interface PaginationResourceResponse<T> extends ResponseDataList<T> {
     meta: PaginationMetadata;
 }
 
-export interface PaginationData<T, U> {
-    pagination: Pagination<U>;
+export interface PaginationData<T, U, K extends Pagination<U> = Pagination<U>> {
+    pagination: K;
     data: T[];
 }
