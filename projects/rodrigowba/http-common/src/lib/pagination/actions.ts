@@ -3,24 +3,24 @@ import { Pagination, Filters } from './model';
 
 
 export const paginationActions = <T extends Filters, U extends Pagination<T> = Pagination<T>>() => {
-    const loadPaginationAction = createAction(
+    const loadPagination = createAction(
         '[Pagination] Load Pagination',
         props<{ payload: U }>()
     );
 
-    const paginationLoadedAction = createAction(
+    const paginationLoaded = createAction(
         '[Pagination] Pagination Loaded',
         props<{ payload: U }>()
     );
 
-    const resetPaginationAction = createAction(
+    const resetPagination = createAction(
         '[Pagination] Reset Pagination',
         props<{ payload: T }>()
     );
 
     return {
-        loadPaginationAction,
-        paginationLoadedAction,
-        resetPaginationAction
+        loadPagination,
+        paginationLoaded,
+        resetPagination
     };
 };

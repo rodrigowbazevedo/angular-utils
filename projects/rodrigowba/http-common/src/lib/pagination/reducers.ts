@@ -83,15 +83,14 @@ export const upsertPagination = <T extends Filters, U extends Pagination<T> = Pa
         }
 
         return {
-            ...currentPagination,
-            filters,
+            ...pagination,
             metadata: newMeta,
             ids: newIds
         };
     };
 };
 
-export function paginationReducer<T extends Filters, U extends Pagination<T> = Pagination<T>>() {
+export function paginationStore<T extends Filters, U extends Pagination<T> = Pagination<T>>() {
     const paginationAdapter: EntityAdapter<U> = createEntityAdapter<U>({
         selectId: (pagination: U) => getFiltersHash(pagination.filters)
     });
@@ -103,18 +102,18 @@ export function paginationReducer<T extends Filters, U extends Pagination<T> = P
     const reducer = createReducer(
         initialState,
         on(
-            actions.loadPaginationAction,
+            actions.loadPagination,
             (state, { payload }) => paginationAdapter.upsertOne(payload, state)
         ),
         on(
-            actions.paginationLoadedAction,
+            actions.paginationLoaded,
             (state, { payload }) => paginationAdapter.upsertOne(
                 upsertPagination<T, U>(payload)(state),
                 state
             )
         ),
         on(
-            actions.resetPaginationAction,
+            actions.resetPagination,
             (state, { payload }) => paginationAdapter.upsertOne(
                 resetPagination<T, U>(payload)(state),
                 state
@@ -124,7 +123,8 @@ export function paginationReducer<T extends Filters, U extends Pagination<T> = P
 
     return {
         reducer,
-        actions
+        actions,
+        initialState,
     };
 }
 
@@ -185,40 +185,52 @@ export const getPaginationIds = <T extends Filters, U extends Pagination<T> = Pa
     );
 };
 
-export const paginationResponseFromPageResponse = <K extends object, T extends Filters, U extends Pagination<T> = Pagination<T>>(
-    pageResponse: PaginationDataResponse<K>,
+export const paginationResponseFromPageResponse = <
+    K extends object,
+    T extends Filters,
+    U extends Pagination<T> = Pagination<T>,
+    Z extends PaginationDataResponse<K> = PaginationDataResponse<K>
+>(
+    pageResponse: Z,
     filters: T,
 // tslint:disable-next-line: no-string-literal
-    selectId = (entity: K) => entity['id']
+    selectId = (entity: K) => entity['id'],
+    reducePagination = (pagination: Pagination<T>, response: Z): U => ({ ...pagination }) as U
 ): PaginationData<K, T, U> => {
     const { data, ...metadata } = pageResponse;
 
     return {
-        pagination: {
+        pagination: reducePagination({
             filters,
             metadata: metadata as PaginationMetadata,
             ids: data.map(selectId)
-        },
+        }, pageResponse),
         data
-    } as PaginationData<K, T, U>;
+    };
 };
 
-export const paginationResponseFromResourceResponse = <K extends object, T extends Filters, U extends Pagination<T> = Pagination<T>>(
-    pageResponse: PaginationResourceResponse<K>,
+export const paginationResponseFromResourceResponse = <
+    K extends object,
+    T extends Filters,
+    U extends Pagination<T> = Pagination<T>,
+    Z extends PaginationResourceResponse<K> = PaginationResourceResponse<K>
+>(
+    pageResponse: Z,
     filters: T,
 // tslint:disable-next-line: no-string-literal
-    selectId = (entity: K) => entity['id']
+    selectId = (entity: K) => entity['id'],
+    reducePagination = (pagination: Pagination<T>, response: Z): U => ({ ...pagination }) as U
 ): PaginationData<K, T, U> => {
     const { data, meta } = pageResponse;
 
     return {
-        pagination: {
+        pagination: reducePagination({
             filters,
             metadata: meta,
             ids: data.map(selectId)
-        },
+        }, pageResponse),
         data
-    } as PaginationData<K, T, U>;
+    };
 };
 
 export const isInitialPagination = <T extends Filters, U extends Pagination<T> = Pagination<T>>() => (
