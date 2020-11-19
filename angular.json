@@ -43,7 +43,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
@@ -131,7 +130,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/rodrigowba/env/tsconfig.lib.json",
             "project": "projects/rodrigowba/env/ng-package.json"
@@ -171,7 +170,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/rodrigowba/ngrx-persist/tsconfig.lib.json",
             "project": "projects/rodrigowba/ngrx-persist/ng-package.json"
@@ -211,7 +210,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/rodrigowba/http-common/tsconfig.lib.json",
             "project": "projects/rodrigowba/http-common/ng-package.json"
@@ -251,7 +250,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/rodrigowba/observer-component/tsconfig.lib.json",
             "project": "projects/rodrigowba/observer-component/ng-package.json"
@@ -291,7 +290,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/rodrigowba/ngrx-i18n/tsconfig.lib.json",
             "project": "projects/rodrigowba/ngrx-i18n/ng-package.json"
@@ -331,7 +330,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/rodrigowba/pipes/tsconfig.lib.json",
             "project": "projects/rodrigowba/pipes/ng-package.json"
@@ -371,7 +370,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/rodrigowba/form-utils/tsconfig.lib.json",
             "project": "projects/rodrigowba/form-utils/ng-package.json"
@@ -411,7 +410,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/rodrigowba/rxjs-utils/tsconfig.lib.json",
             "project": "projects/rodrigowba/rxjs-utils/ng-package.json"
