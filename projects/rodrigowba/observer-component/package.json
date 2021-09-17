@@ -1,10 +1,10 @@
 {
   "name": "@rodrigowba/observer-component",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "peerDependencies": {
-    "@angular/common": "~11.0.2",
-    "@angular/core": "~11.0.2",
-    "@rodrigowba/http-common": "0.1.6"
+    "@angular/common": "~12.2.6",
+    "@angular/core": "~12.2.6",
+    "@rodrigowba/http-common": "0.1.7"
   },
   "dependencies": {
     "tslib": "^2.0.0"

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ng build @rodrigowba/http-common --prod
+ng build @rodrigowba/http-common --configuration production
 
 echo "Building Schematics"
 

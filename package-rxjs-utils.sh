@@ -1,3 +1,3 @@
 #!/bin/bash
 
-ng build @rodrigowba/rxjs-utils --prod
+ng build @rodrigowba/rxjs-utils --configuration production

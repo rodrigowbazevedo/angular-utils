@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ng build @rodrigowba/env --prod
+ng build @rodrigowba/env --configuration production
 
 echo "Building Schematics"
 

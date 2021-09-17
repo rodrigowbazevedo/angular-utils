@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ng build @rodrigowba/ngrx-persist --prod
+ng build @rodrigowba/ngrx-persist --configuration production
 
 echo "Building Schematics"
 

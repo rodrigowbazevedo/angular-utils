@@ -1,3 +1,3 @@
 #!/bin/bash
 
-ng build @rodrigowba/observer-component --prod
+ng build @rodrigowba/observer-component --configuration production

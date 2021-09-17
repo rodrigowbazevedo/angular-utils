@@ -1,3 +1,3 @@
 #!/bin/bash
 
-ng build @rodrigowba/form-utils --prod
+ng build @rodrigowba/form-utils --configuration production
