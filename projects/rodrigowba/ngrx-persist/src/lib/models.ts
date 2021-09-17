@@ -19,3 +19,12 @@ export interface PersistedState<T> {
     state?: T;
     date?: Date;
 }
+
+export enum SelectorTypes {
+    Stored = 'stored',
+    Sync = 'sync'
+}
+
+export type SelectorType = SelectorTypes.Stored
+    | SelectorTypes.Sync
+;

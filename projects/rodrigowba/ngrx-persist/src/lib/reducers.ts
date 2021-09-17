@@ -1,10 +1,10 @@
 import { on } from '@ngrx/store';
 import { storedState, syncState } from './actions';
-import { StateWithPersistence } from './models';
+import { StateWithPersistence, SelectorTypes, SelectorType } from './models';
 
 export function persistStateActions<T extends StateWithPersistence, U>(
     featureName: string,
-    selector: (state: T | U) => T = (state) => state as T
+    selector: (state: T | U, type: SelectorType) => T = (state) => state as T
 ) {
     return [
         on(storedState, (state: T | U, payload) => {
@@ -14,13 +14,13 @@ export function persistStateActions<T extends StateWithPersistence, U>(
 
             if (typeof payload.state === 'undefined') {
                 return {
-                    ...selector(state),
+                    ...selector(state, SelectorTypes.Stored),
                     loaded: true
                 };
             }
 
             return {
-                ...selector(payload.state),
+                ...selector(payload.state, SelectorTypes.Stored),
                 loaded: true,
                 fromCache: true
             };
@@ -30,7 +30,7 @@ export function persistStateActions<T extends StateWithPersistence, U>(
                 return state;
             }
 
-            return selector(payload.state);
+            return selector(payload.state, SelectorTypes.Sync);
         })
     ];
 }

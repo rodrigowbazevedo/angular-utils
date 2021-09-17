@@ -1,9 +1,9 @@
-import { NgModule, ModuleWithProviders, Inject } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 
 import { PersistenceService } from './persistence.service';
 import { FEATURE_CONFIG, BUILD_ID } from './tokens';
-import { FeatureReducer } from './models';
+import { FeatureConfig } from './models';
 import { PersistFeatureStateModule } from './persistence-feature-state.module';
 
 export function featureEmptyReducer<T>(state: T) {
@@ -31,10 +31,7 @@ export class PersistStateModule {
     }
 
     static forFeature<T>(
-        featureName: string,
-        debounce = 5,
-        reducer: FeatureReducer<T> = featureEmptyReducer,
-        sync = false
+        config: Partial<FeatureConfig<T>>
     ): ModuleWithProviders<PersistFeatureStateModule> {
         return {
             ngModule: PersistFeatureStateModule,
@@ -43,10 +40,10 @@ export class PersistStateModule {
                     provide: FEATURE_CONFIG,
                     multi: true,
                     useValue: {
-                        name: featureName,
-                        reducer,
-                        debounce,
-                        sync
+                        debounce: false,
+                        reducer: featureEmptyReducer,
+                        sync: false,
+                        ...config
                     }
                 },
             ]
