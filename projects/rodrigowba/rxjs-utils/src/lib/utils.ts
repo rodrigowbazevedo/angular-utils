@@ -1,8 +1,5 @@
-import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { Observable, firstValueFrom } from 'rxjs';
 
 export const toPromise = <T>(observable: Observable<T>): Promise<T> => {
-    return observable.pipe(
-        take(1)
-    ).toPromise();
+    return firstValueFrom(observable);
 };

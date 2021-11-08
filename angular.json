@@ -96,19 +96,6 @@
             "scripts": []
           }
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        },
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
@@ -148,18 +135,6 @@
             "tsConfig": "projects/rodrigowba/env/tsconfig.spec.json",
             "karmaConfig": "projects/rodrigowba/env/karma.conf.js"
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/rodrigowba/env/tsconfig.lib.json",
-              "projects/rodrigowba/env/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     },
@@ -187,18 +162,6 @@
             "main": "projects/rodrigowba/ngrx-persist/src/test.ts",
             "tsConfig": "projects/rodrigowba/ngrx-persist/tsconfig.spec.json",
             "karmaConfig": "projects/rodrigowba/ngrx-persist/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/rodrigowba/ngrx-persist/tsconfig.lib.json",
-              "projects/rodrigowba/ngrx-persist/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
           }
         }
       }
@@ -228,18 +191,6 @@
             "tsConfig": "projects/rodrigowba/http-common/tsconfig.spec.json",
             "karmaConfig": "projects/rodrigowba/http-common/karma.conf.js"
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/rodrigowba/http-common/tsconfig.lib.json",
-              "projects/rodrigowba/http-common/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     },
@@ -267,18 +218,6 @@
             "main": "projects/rodrigowba/observer-component/src/test.ts",
             "tsConfig": "projects/rodrigowba/observer-component/tsconfig.spec.json",
             "karmaConfig": "projects/rodrigowba/observer-component/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/rodrigowba/observer-component/tsconfig.lib.json",
-              "projects/rodrigowba/observer-component/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
           }
         }
       }
@@ -308,18 +247,6 @@
             "tsConfig": "projects/rodrigowba/ngrx-i18n/tsconfig.spec.json",
             "karmaConfig": "projects/rodrigowba/ngrx-i18n/karma.conf.js"
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/rodrigowba/ngrx-i18n/tsconfig.lib.json",
-              "projects/rodrigowba/ngrx-i18n/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     },
@@ -347,18 +274,6 @@
             "main": "projects/rodrigowba/pipes/src/test.ts",
             "tsConfig": "projects/rodrigowba/pipes/tsconfig.spec.json",
             "karmaConfig": "projects/rodrigowba/pipes/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/rodrigowba/pipes/tsconfig.lib.json",
-              "projects/rodrigowba/pipes/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
           }
         }
       }
@@ -388,18 +303,6 @@
             "tsConfig": "projects/rodrigowba/form-utils/tsconfig.spec.json",
             "karmaConfig": "projects/rodrigowba/form-utils/karma.conf.js"
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/rodrigowba/form-utils/tsconfig.lib.json",
-              "projects/rodrigowba/form-utils/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     },
@@ -427,18 +330,6 @@
             "main": "projects/rodrigowba/rxjs-utils/src/test.ts",
             "tsConfig": "projects/rodrigowba/rxjs-utils/tsconfig.spec.json",
             "karmaConfig": "projects/rodrigowba/rxjs-utils/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/rodrigowba/rxjs-utils/tsconfig.lib.json",
-              "projects/rodrigowba/rxjs-utils/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
           }
         }
       }

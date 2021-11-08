@@ -23,7 +23,7 @@ export function scrollPaginationMixin<T extends Constructor<{}>>(BaseClass: T = 
         }
 
         selectToLoadPage<U extends Filters>(pagination$: Observable<Pagination<U>>): Observable<U> {
-            return merge<U>(
+            return merge(
                 pagination$.pipe(
                     isInitialPagination<U>(),
                 ),
