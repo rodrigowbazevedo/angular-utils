@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e
+set -o pipefail
 
 npm run package:env
 npm run package:ngrx-persist

@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e
+set -o pipefail
 
 ng build @rodrigowba/ngrx-persist --configuration production
 
