@@ -12,51 +12,54 @@ import { Translation, defaultNamespace } from './ngrx-i18n.model';
 })
 export class NgrxI18nService {
 
-    private language$: Observable<string>;
+  private language$: Observable<string>;
 
-    constructor(
-        private store: Store<any>
-    ) {
-        this.language$ = this.store.pipe(
-            select(createSelectorState()),
-            map(selectLanguage),
-            shareReplay(1)
-        );
-    }
+  constructor(
+    private store: Store<any>
+  ) {
+    this.language$ = this.store.pipe(
+      select(createSelectorState()),
+      map(selectLanguage),
+      shareReplay({
+        bufferSize: 1,
+        refCount: true
+      })
+    );
+  }
 
-    selectLanguage(): Observable<string> {
-        return this.language$;
-    }
+  selectLanguage(): Observable<string> {
+    return this.language$;
+  }
 
-    selectTranslation(
-        key: string,
-        params: { [k: string]: string | number } = {},
-        namespace: string = defaultNamespace
-    ): Observable<string> {
-        return this.language$.pipe(
-            switchMap(() => this.store.pipe(
-                select(createSelectorState()),
-                map(selectTranslation(key, params, namespace))
-            ))
-        );
-    }
+  selectTranslation(
+    key: string,
+    params: { [k: string]: string | number } = {},
+    namespace: string = defaultNamespace
+  ): Observable<string> {
+    return this.language$.pipe(
+      switchMap(() => this.store.pipe(
+        select(createSelectorState()),
+        map(selectTranslation(key, params, namespace))
+      ))
+    );
+  }
 
-    setLanguage(language: string) {
-        this.store.dispatch(new SetLanguage(language));
-    }
+  setLanguage(language: string) {
+    this.store.dispatch(new SetLanguage(language));
+  }
 
-    setDefaultLanguage(language: string) {
-        this.store.dispatch(new SetDefaultLanguage(language));
-    }
+  setDefaultLanguage(language: string) {
+    this.store.dispatch(new SetDefaultLanguage(language));
+  }
 
-    loadTranslations(translations: Translation[], namespace: string = defaultNamespace) {
-        this.store.dispatch(new LoadTranslations({
-            namespace,
-            languages: translations
-        }));
-    }
+  loadTranslations(translations: Translation[], namespace: string = defaultNamespace) {
+    this.store.dispatch(new LoadTranslations({
+      namespace,
+      languages: translations
+    }));
+  }
 
-    loadTranslation(translation: Translation, namespace: string = defaultNamespace) {
-        this.loadTranslations([translation], namespace);
-    }
+  loadTranslation(translation: Translation, namespace: string = defaultNamespace) {
+    this.loadTranslations([translation], namespace);
+  }
 }

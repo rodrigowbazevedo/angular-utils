@@ -1,16 +1,5 @@
 import { EnvService } from './env.service';
 
-export const EnvServiceFactory = () => {
-  const env = new EnvService();
+declare const __env: Record<string, unknown>;
 
-  const browserWindow = window || {};
-  const browserWindowEnv = browserWindow['__env'] || {};
-
-  for (const key in browserWindowEnv) {
-    if (browserWindowEnv.hasOwnProperty(key)) {
-      env[key] = window['__env'][key];
-    }
-  }
-
-  return env;
-};
+export const EnvServiceFactory = () => new EnvService(__env || {});

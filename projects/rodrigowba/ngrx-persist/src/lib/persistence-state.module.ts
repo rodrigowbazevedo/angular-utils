@@ -7,46 +7,46 @@ import { FeatureConfig } from './models';
 import { PersistFeatureStateModule } from './persistence-feature-state.module';
 
 export function featureEmptyReducer<T>(state: T) {
-    return state;
+  return state;
 }
 
 @NgModule({
-    declarations: [],
-    imports: [
-        StoreModule,
-    ]
+  declarations: [],
+  imports: [
+    StoreModule,
+  ]
 })
 export class PersistStateModule {
-    static forRoot(buildId: string = 'DEV'): ModuleWithProviders<PersistStateModule> {
-        return {
-            ngModule: PersistStateModule,
-            providers: [
-                PersistenceService,
-                {
-                    provide: BUILD_ID,
-                    useValue: buildId
-                },
-            ]
-        };
-    }
+  static forRoot(buildId: string = 'DEV'): ModuleWithProviders<PersistStateModule> {
+    return {
+      ngModule: PersistStateModule,
+      providers: [
+        PersistenceService,
+        {
+          provide: BUILD_ID,
+          useValue: buildId
+        },
+      ]
+    };
+  }
 
-    static forFeature<T>(
-        config: Partial<FeatureConfig<T>>
-    ): ModuleWithProviders<PersistFeatureStateModule> {
-        return {
-            ngModule: PersistFeatureStateModule,
-            providers: [
-                {
-                    provide: FEATURE_CONFIG,
-                    multi: true,
-                    useValue: {
-                        debounce: false,
-                        reducer: featureEmptyReducer,
-                        sync: false,
-                        ...config
-                    }
-                },
-            ]
-        };
-    }
+  static forFeature<T>(
+    config: Partial<FeatureConfig<T>>
+  ): ModuleWithProviders<PersistFeatureStateModule> {
+    return {
+      ngModule: PersistFeatureStateModule,
+      providers: [
+        {
+          provide: FEATURE_CONFIG,
+          multi: true,
+          useValue: {
+            debounce: false,
+            reducer: featureEmptyReducer,
+            sync: false,
+            ...config
+          }
+        },
+      ]
+    };
+  }
 }

@@ -5,13 +5,13 @@ import { IsInPipe } from './pipes/is-in.pipe';
 import { ToDatePipe } from './pipes/to-date.pipe';
 
 const pipes = [
-    FnPipe,
-    IsInPipe,
-    ToDatePipe
+  FnPipe,
+  IsInPipe,
+  ToDatePipe
 ];
 
 @NgModule({
-    declarations: pipes,
-    exports: pipes
+  declarations: pipes,
+  exports: pipes
 })
-export class PipesModule {}
+export class PipesModule { }

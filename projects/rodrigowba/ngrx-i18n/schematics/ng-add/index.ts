@@ -33,29 +33,28 @@ export function setupOptions(host: Tree, options: any): Tree {
 }
 
 function addPackageJsonDependencies(): Rule {
-    return (host: Tree, context: SchematicContext) => {
-      const dependencies: NodeDependency[] = [
-        { type: NodeDependencyType.Default, version: '~8.0.1', name: '@ngrx/store' },
-        { type: NodeDependencyType.Default, version: '~4.17.15', name: 'lodash' },
-        { type: NodeDependencyType.Default, version: '~0.0.5', name: '@rodrigowba/ngrx-i18n' }
-      ];
+  return (host: Tree, context: SchematicContext) => {
+    const dependencies: NodeDependency[] = [
+      { type: NodeDependencyType.Default, version: '^8', name: '@ngrx/store' },
+      { type: NodeDependencyType.Default, version: '^4.17.15', name: 'lodash' },
+    ];
 
-      dependencies.forEach(dependency => {
-        addPackageJsonDependency(host, dependency);
-        context.logger.log('info', `✅️ Added "${dependency.name}" into ${dependency.type}`);
-      });
+    dependencies.forEach(dependency => {
+      addPackageJsonDependency(host, dependency);
+      context.logger.log('info', `✅️ Added "${dependency.name}" into ${dependency.type}`);
+    });
 
-      return host;
-    };
+    return host;
+  };
 }
 
 function installPackageJsonDependencies(): Rule {
-    return (host: Tree, context: SchematicContext) => {
-        context.addTask(new NodePackageInstallTask());
-        context.logger.log('info', `🔍 Installing packages...`);
+  return (host: Tree, context: SchematicContext) => {
+    context.addTask(new NodePackageInstallTask());
+    context.logger.log('info', `🔍 Installing packages...`);
 
-        return host;
-    };
+    return host;
+  };
 }
 
 export function addModule(options: any): Rule {
@@ -92,14 +91,14 @@ export function addModule(options: any): Rule {
   };
 }
 
-export default function(options: any): Rule {
+export default function (options: any): Rule {
   return (host: Tree, context: SchematicContext) => {
     setupOptions(host, options);
 
     return chain([
-        addPackageJsonDependencies(),
-        installPackageJsonDependencies(),
-        addModule(options),
+      addPackageJsonDependencies(),
+      installPackageJsonDependencies(),
+      addModule(options),
     ])(host, context);
   };
 }

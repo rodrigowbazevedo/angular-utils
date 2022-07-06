@@ -305,37 +305,8 @@
           }
         }
       }
-    },
-    "@rodrigowba/rxjs-utils": {
-      "projectType": "library",
-      "root": "projects/rodrigowba/rxjs-utils",
-      "sourceRoot": "projects/rodrigowba/rxjs-utils/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "tsConfig": "projects/rodrigowba/rxjs-utils/tsconfig.lib.json",
-            "project": "projects/rodrigowba/rxjs-utils/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/rodrigowba/rxjs-utils/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/rodrigowba/rxjs-utils/src/test.ts",
-            "tsConfig": "projects/rodrigowba/rxjs-utils/tsconfig.spec.json",
-            "karmaConfig": "projects/rodrigowba/rxjs-utils/karma.conf.js"
-          }
-        }
-      }
     }
   },
-  "defaultProject": "angular-utils",
   "cli": {
     "analytics": "7e644fd2-ad35-43e4-8f9a-955583a540ff"
   }

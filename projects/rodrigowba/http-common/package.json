@@ -1,11 +1,12 @@
 {
   "name": "@rodrigowba/http-common",
-  "version": "0.1.9",
+  "version": "1.0.0",
   "schematics": "./collection.json",
   "peerDependencies": {
-    "@angular/common": "~13.0.0",
-    "@angular/core": "~13.0.0",
-    "@ngrx/entity": "^13.0.1",
+    "@angular/common": ">=9",
+    "@angular/core": ">=9",
+    "@ngrx/store": ">=8",
+    "@ngrx/entity": ">=8",
     "json-hash": "^1.2.0"
   },
   "dependencies": {

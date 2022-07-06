@@ -1,19 +1,19 @@
 export interface DefaultResponse {
-    success: boolean;
-    message?: string;
+  success: boolean;
+  message?: string;
 }
 
 export interface ResponseData<T> extends DefaultResponse {
-    data: T;
+  data: T;
 }
 
 export interface ResponseDataList<T> extends DefaultResponse {
-    data: T[];
+  data: T[];
 }
 
 export interface FormValidationResponse {
-    message: string;
-    errors: {
-        [k: string]: string[];
-    };
+  message: string;
+  errors: {
+    [k: string]: string[];
+  };
 }

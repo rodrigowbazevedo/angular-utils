@@ -35,10 +35,9 @@ export function setupOptions(host: Tree, options: any): Tree {
 function addPackageJsonDependencies(): Rule {
     return (host: Tree, context: SchematicContext) => {
       const dependencies: NodeDependency[] = [
-        { type: NodeDependencyType.Default, version: '~8.0.1', name: '@ngrx/store' },
-        { type: NodeDependencyType.Default, version: '~1.1.0', name: 'kv-storage-polyfill' },
-        { type: NodeDependencyType.Default, version: '~4.17.15', name: 'lodash' },
-        { type: NodeDependencyType.Default, version: '~0.0.5', name: '@rodrigowba/ngrx-persist' }
+        { type: NodeDependencyType.Default, version: '^8', name: '@ngrx/store' },
+        { type: NodeDependencyType.Default, version: '^1.1.0', name: 'kv-storage-polyfill' },
+        { type: NodeDependencyType.Default, version: '^4.17.15', name: 'lodash' },
       ];
 
       dependencies.forEach(dependency => {

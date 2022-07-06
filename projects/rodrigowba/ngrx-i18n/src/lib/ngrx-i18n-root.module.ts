@@ -11,10 +11,10 @@ import { NgrxI18nService } from './ngrx-i18n.service';
   ],
 })
 export class NgrxI18nRootModule {
-    constructor(
-        @Inject(DEFAULT_LANGUAGE) language: string,
-        i18nService: NgrxI18nService
-    ) {
-        i18nService.setDefaultLanguage(language);
-    }
+  constructor(
+    @Inject(DEFAULT_LANGUAGE) language: string,
+    i18nService: NgrxI18nService
+  ) {
+    i18nService.setDefaultLanguage(language);
+  }
 }

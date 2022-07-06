@@ -6,14 +6,14 @@ import { MODULE_NAMESPACE } from '../tokens';
 
 
 @Pipe({ name: 'i18n' })
-export class I18nPipe implements PipeTransform  {
+export class I18nPipe implements PipeTransform {
 
-    constructor(
-        private i18nService: NgrxI18nService,
-        @Inject(MODULE_NAMESPACE) private namespace: string,
-    ) { }
+  constructor(
+    private i18nService: NgrxI18nService,
+    @Inject(MODULE_NAMESPACE) private namespace: string,
+  ) { }
 
-    transform(key: string, params: { [k: string]: string | number } = {}, namespace = this.namespace ): Observable<string> {
-        return this.i18nService.selectTranslation(key, params, namespace);
-    }
+  transform(key: string, params: { [k: string]: string | number } = {}, namespace = this.namespace): Observable<string> {
+    return this.i18nService.selectTranslation(key, params, namespace);
+  }
 }

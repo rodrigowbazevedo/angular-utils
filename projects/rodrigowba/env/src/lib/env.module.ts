@@ -10,9 +10,9 @@ export class EnvModule {
       ngModule: EnvModule,
       providers: [
         {
-            provide: EnvService,
-            useFactory: EnvServiceFactory,
-            deps: [],
+          provide: EnvService,
+          useFactory: EnvServiceFactory,
+          deps: [],
         }
       ]
     };

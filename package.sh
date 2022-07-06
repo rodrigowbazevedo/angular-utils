@@ -9,4 +9,3 @@ npm run package:http-common
 npm run package:observer-component
 npm run package:pipes
 npm run package:form-utils
-npm run package:rxjs-utils

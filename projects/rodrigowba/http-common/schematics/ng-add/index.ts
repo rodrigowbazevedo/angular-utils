@@ -28,37 +28,37 @@ export function setupOptions(host: Tree, options: any): Tree {
 }
 
 function addPackageJsonDependencies(): Rule {
-    return (host: Tree, context: SchematicContext) => {
-      const dependencies: NodeDependency[] = [
-        { type: NodeDependencyType.Default, version: '~8.3.0', name: '@ngrx/entity' },
-        { type: NodeDependencyType.Default, version: '~1.2.0', name: 'json-hash' },
-      ];
+  return (host: Tree, context: SchematicContext) => {
+    const dependencies: NodeDependency[] = [
+      { type: NodeDependencyType.Default, version: '^8', name: '@ngrx/entity' },
+      { type: NodeDependencyType.Default, version: '^1.2.0', name: 'json-hash' },
+    ];
 
-      dependencies.forEach(dependency => {
-        addPackageJsonDependency(host, dependency);
-        context.logger.log('info', `✅️ Added "${dependency.name}" into ${dependency.type}`);
-      });
+    dependencies.forEach(dependency => {
+      addPackageJsonDependency(host, dependency);
+      context.logger.log('info', `✅️ Added "${dependency.name}" into ${dependency.type}`);
+    });
 
-      return host;
-    };
+    return host;
+  };
 }
 
 function installPackageJsonDependencies(): Rule {
-    return (host: Tree, context: SchematicContext) => {
-        context.addTask(new NodePackageInstallTask());
-        context.logger.log('info', `🔍 Installing packages...`);
+  return (host: Tree, context: SchematicContext) => {
+    context.addTask(new NodePackageInstallTask());
+    context.logger.log('info', `🔍 Installing packages...`);
 
-        return host;
-    };
+    return host;
+  };
 }
 
-export default function(options: any): Rule {
+export default function (options: any): Rule {
   return (host: Tree, context: SchematicContext) => {
     setupOptions(host, options);
 
     return chain([
-        addPackageJsonDependencies(),
-        installPackageJsonDependencies(),
+      addPackageJsonDependencies(),
+      installPackageJsonDependencies(),
     ])(host, context);
   };
 }

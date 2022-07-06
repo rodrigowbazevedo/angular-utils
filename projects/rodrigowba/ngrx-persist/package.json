@@ -1,13 +1,13 @@
 {
   "name": "@rodrigowba/ngrx-persist",
-  "version": "0.1.11",
+  "version": "1.0.0",
   "schematics": "./collection.json",
   "peerDependencies": {
-    "@angular/common": "~13.0.0",
-    "@angular/core": "~13.0.0",
-    "@ngrx/store": "^13.0.1",
+    "@angular/common": ">=8",
+    "@angular/core": ">=8",
+    "@ngrx/store": ">=8",
     "kv-storage-polyfill": "^2.0.0",
-    "rxjs": "^7.4.0",
+    "rxjs": ">=6",
     "lodash": "^4.17.15"
   },
   "dependencies": {

@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ValidadeDirective } from './directives/validate.directive';
 
 const components = [
-    ValidadeDirective
+  ValidadeDirective
 ];
 
 @NgModule({

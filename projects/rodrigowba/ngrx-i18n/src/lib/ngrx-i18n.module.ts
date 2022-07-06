@@ -8,41 +8,41 @@ import { DEFAULT_LANGUAGE, MODULE_NAMESPACE, MODULE_TRANSLATIONS } from './token
 import { Translation, defaultNamespace } from './ngrx-i18n.model';
 
 @NgModule({
-    imports: [
-        StoreModule
-    ],
-    providers: [
-        NgrxI18nService
-    ],
+  imports: [
+    StoreModule
+  ],
+  providers: [
+    NgrxI18nService
+  ],
 })
 export class NgrxI18nModule {
-    static forRoot(defaultLanguage = 'en'): ModuleWithProviders<NgrxI18nRootModule> {
-        return {
-            ngModule: NgrxI18nRootModule,
-            providers: [
-                NgrxI18nService,
-                {
-                    provide: DEFAULT_LANGUAGE,
-                    useValue: defaultLanguage
-                },
-            ]
-        };
-    }
+  static forRoot(defaultLanguage = 'en'): ModuleWithProviders<NgrxI18nRootModule> {
+    return {
+      ngModule: NgrxI18nRootModule,
+      providers: [
+        NgrxI18nService,
+        {
+          provide: DEFAULT_LANGUAGE,
+          useValue: defaultLanguage
+        },
+      ]
+    };
+  }
 
-    static forChild(translations: Translation[] = [], namespace = defaultNamespace): ModuleWithProviders<NgrxI18nChildModule> {
-        return {
-            ngModule: NgrxI18nChildModule,
-            providers: [
-                NgrxI18nService,
-                {
-                    provide: MODULE_TRANSLATIONS,
-                    useValue: translations,
-                },
-                {
-                    provide: MODULE_NAMESPACE,
-                    useValue: namespace,
-                },
-            ]
-        };
-    }
+  static forChild(translations: Translation[] = [], namespace = defaultNamespace): ModuleWithProviders<NgrxI18nChildModule> {
+    return {
+      ngModule: NgrxI18nChildModule,
+      providers: [
+        NgrxI18nService,
+        {
+          provide: MODULE_TRANSLATIONS,
+          useValue: translations,
+        },
+        {
+          provide: MODULE_NAMESPACE,
+          useValue: namespace,
+        },
+      ]
+    };
+  }
 }
