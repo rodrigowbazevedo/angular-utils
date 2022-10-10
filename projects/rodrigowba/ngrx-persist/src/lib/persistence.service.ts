@@ -53,6 +53,8 @@ export class PersistenceService {
     const { name } = config;
     const key = `state.${name}`;
 
+    const syncStateAction = syncState<T>();
+
     return fromEvent(window, 'storage').pipe(
       filter((e: StorageEvent) => e.key === key),
       map(e => e.newValue),
@@ -60,7 +62,7 @@ export class PersistenceService {
       switchMap(() => from(this.storage.get(key))),
       tap((data: PersistedState<T> | undefined) => {
         if (data) {
-          this.store.dispatch(syncState(data));
+          this.store.dispatch(syncStateAction(data));
         }
       }),
       map(() => name)
@@ -72,6 +74,7 @@ export class PersistenceService {
     const key = `state.${name}`;
 
     const featureSelector = createFeatureSelector<T>(name);
+    const storedStateAction = storedState<T>();
 
     return from(this.storage.get(key)).pipe(
       map((data: PersistedState<T> | undefined) => {
@@ -82,7 +85,7 @@ export class PersistenceService {
         return { feature: name };
       }),
       tap((data: PersistedState<T> | undefined) => {
-        this.store.dispatch(storedState(data));
+        this.store.dispatch(storedStateAction(data));
       }),
       switchMap(() => this.store.pipe(
         select(featureSelector),
