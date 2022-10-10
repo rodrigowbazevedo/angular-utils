@@ -22,7 +22,7 @@ export const validateCnpj = (control: AbstractControl) => {
   }
 
   if (/^(.)\1+$/.test(cnpj)) {
-    return false;
+    return error;
   }
 
   let length = cnpj.length - 2;
