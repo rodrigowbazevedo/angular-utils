@@ -8,6 +8,8 @@ echo "Building Schematics"
 
 cd projects/rodrigowba/env
 
+npm install
+
 tsc -p tsconfig.schematics.json
 
 echo "Copying collections to dist"

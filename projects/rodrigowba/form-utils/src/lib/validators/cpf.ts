@@ -22,7 +22,7 @@ export const validateCpf = (control: AbstractControl) => {
   }
 
   if (/^(.)\1+$/.test(cpf)) {
-    return false;
+    return error;
   }
 
   let add = 0;

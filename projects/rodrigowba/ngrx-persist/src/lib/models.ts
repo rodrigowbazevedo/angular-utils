@@ -15,7 +15,6 @@ export interface FeatureConfig<T> {
 
 export interface PersistedState<T> {
   feature: string;
-  build?: string;
   state?: T;
   date?: Date;
 }

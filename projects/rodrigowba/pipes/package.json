@@ -1,9 +1,9 @@
 {
   "name": "@rodrigowba/pipes",
-  "version": "1.0.0",
+  "version": "14.0.1",
   "peerDependencies": {
-    "@angular/common": ">=8",
-    "@angular/core": ">=8",
+    "@angular/common": "^14",
+    "@angular/core": "^14",
     "date-fns": "^2.16.1"
   },
   "dependencies": {

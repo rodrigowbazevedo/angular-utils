@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { Store, select, createFeatureSelector } from '@ngrx/store';
 import { Observable, from, fromEvent, merge } from 'rxjs';
 import { distinctUntilChanged, debounceTime, map, shareReplay, tap, switchMap, filter } from 'rxjs/operators';
-import { storage } from 'kv-storage-polyfill';
+import { StorageArea } from 'kv-storage-polyfill';
 import { isEqual } from 'lodash';
 
 import { FeatureConfig, PersistedState } from './models';
@@ -13,6 +13,7 @@ import { BUILD_ID } from './tokens';
   providedIn: 'root'
 })
 export class PersistenceService {
+  private storage: StorageArea;
   private featureNames: string[] = [];
   private featureObservables: {
     [k: string]: Observable<string>
@@ -21,7 +22,9 @@ export class PersistenceService {
   constructor(
     @Inject(BUILD_ID) private build: string | number = 'DEV',
     private store: Store<any>,
-  ) { }
+  ) {
+    this.storage = new StorageArea(this.build);
+  }
 
   persistFeature<T>(config: FeatureConfig<T>): Observable<string> {
     const { name, sync } = config;
@@ -54,9 +57,9 @@ export class PersistenceService {
       filter((e: StorageEvent) => e.key === key),
       map(e => e.newValue),
       distinctUntilChanged(),
-      switchMap(() => from(storage.get(key))),
+      switchMap(() => from(this.storage.get(key))),
       tap((data: PersistedState<T> | undefined) => {
-        if (data && data.build === this.build) {
+        if (data) {
           this.store.dispatch(syncState(data));
         }
       }),
@@ -70,9 +73,9 @@ export class PersistenceService {
 
     const featureSelector = createFeatureSelector<T>(name);
 
-    return from(storage.get(key)).pipe(
+    return from(this.storage.get(key)).pipe(
       map((data: PersistedState<T> | undefined) => {
-        if (data && data.build === this.build) {
+        if (data) {
           return data;
         }
 
@@ -87,9 +90,8 @@ export class PersistenceService {
         debounceTime(config.debounce * 1000),
         distinctUntilChanged(isEqual),
       )),
-      switchMap(state => from(storage.set(key, {
+      switchMap(state => from(this.storage.set(key, {
         feature: name,
-        build: this.build,
         state,
         date: new Date()
       } as PersistedState<T>))),
