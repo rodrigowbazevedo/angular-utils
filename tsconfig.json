@@ -10,7 +10,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
-    "target": "es2020",
+    "target": "ES2022",
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -43,6 +43,12 @@
       "@rodrigowba/observer-component/*": [
         "dist/rodrigowba/observer-component/*"
       ],
+      "@rodrigowba/ngrx-utils": [
+        "dist/rodrigowba/ngrx-utils"
+      ],
+      "@rodrigowba/ngrx-utils/*": [
+        "dist/rodrigowba/ngrx-utils/*"
+      ],
       "@rodrigowba/ngrx-i18n": [
         "dist/rodrigowba/ngrx-i18n"
       ],
@@ -61,6 +67,7 @@
       "@rodrigowba/form-utils/*": [
         "dist/rodrigowba/form-utils/*"
       ]
-    }
+    },
+    "useDefineForClassFields": false
   }
 }

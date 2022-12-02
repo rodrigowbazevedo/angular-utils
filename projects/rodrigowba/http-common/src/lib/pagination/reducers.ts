@@ -1,4 +1,4 @@
-import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
+import { EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { filter, map, switchMap, distinctUntilChanged } from 'rxjs/operators';
@@ -11,12 +11,11 @@ import {
   PaginationResourceResponse,
   InitialPaginationMetadata,
   PaginationData,
-  PaginationMetadata
+  PaginationMetadata,
+  PaginationState,
 } from './model';
 import { paginationActions } from './actions';
 
-export interface PaginationState<T, U extends Pagination<T> = Pagination<T>> extends EntityState<U> {
-}
 
 export const getFiltersHash = <T extends Filters>(filters: T): string => {
   return hash.digest(filters);

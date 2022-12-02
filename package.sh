@@ -3,6 +3,7 @@ set -e
 set -o pipefail
 
 npm run package:env
+npm run package:ngrx-utils
 npm run package:ngrx-persist
 npm run package:ngrx-i18n
 npm run package:http-common

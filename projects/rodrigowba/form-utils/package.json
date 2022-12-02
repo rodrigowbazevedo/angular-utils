@@ -1,11 +1,11 @@
 {
   "name": "@rodrigowba/form-utils",
-  "version": "14.0.2",
+  "version": "15.0.0",
   "peerDependencies": {
-    "@angular/common": "^14",
-    "@angular/core": "^14",
-    "@angular/forms": "^14",
-    "@rodrigowba/observer-component": "^14"
+    "@angular/common": "^15",
+    "@angular/core": "^15",
+    "@angular/forms": "^15",
+    "@rodrigowba/observer-component": "^15"
   },
   "dependencies": {
     "tslib": "^2.0.0"

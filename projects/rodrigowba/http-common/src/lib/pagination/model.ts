@@ -1,4 +1,9 @@
-import { ResponseDataList } from '../response';
+import { EntityState } from '@ngrx/entity';
+import { Action, ActionReducer } from '@ngrx/store/src/models';
+
+import { ActionCreatorWithPayloadAndInjector, ActionCreatorWithPayload } from '@rodrigowba/ngrx-utils';
+
+import { DefaultResponse, ResponseDataList } from '../response/model';
 
 export interface PaginationMetadata {
   current_page: number;
@@ -46,3 +51,28 @@ export interface PaginationData<T, U, K extends Pagination<U> = Pagination<U>> {
   pagination: K;
   data: T[];
 }
+
+export interface PaginationState<T, U extends Pagination<T> = Pagination<T>> extends EntityState<U> {
+}
+
+export interface OuterPaginationState<T, F extends Filters> extends EntityState<T> {
+  pagination: PaginationState<F>;
+}
+
+export interface OuterPaginationActions<T, F extends Filters> {
+  loadNextPage: ActionCreatorWithPayloadAndInjector<F>;
+  loadPage: ActionCreatorWithPayloadAndInjector<Pagination<F>>;
+  noPageToLoad: ActionCreatorWithPayloadAndInjector<F>;
+  fetchPageData: ActionCreatorWithPayloadAndInjector<number>;
+  pageDataFetched: ActionCreatorWithPayloadAndInjector<PaginationData<T, F, Pagination<F>>>;
+  pageDataFetchFailed: ActionCreatorWithPayloadAndInjector<DefaultResponse>;
+  resetPagination: ActionCreatorWithPayloadAndInjector<F>;
+}
+
+export interface PaginationActions<F extends Filters, U extends Pagination<F> = Pagination<F>> {
+  loadPagination: ActionCreatorWithPayload<U>;
+  paginationLoaded: ActionCreatorWithPayload<U>;
+  resetPagination: ActionCreatorWithPayload<F>;
+}
+
+export type PaginationReducer<F extends Filters> = ActionReducer<PaginationState<F, Pagination<F>>, Action>;
