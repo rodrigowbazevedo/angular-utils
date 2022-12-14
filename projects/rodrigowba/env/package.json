@@ -1,6 +1,6 @@
 {
   "name": "@rodrigowba/env",
-  "version": "15.0.0",
+  "version": "15.0.1",
   "schematics": "./collection.json",
   "peerDependencies": {
     "@angular/common": "^15",
