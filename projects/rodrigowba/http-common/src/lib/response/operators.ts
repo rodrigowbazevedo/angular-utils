@@ -2,14 +2,23 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { throwError, Observable, pipe } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
-import { DefaultResponse, ErrorResponse } from './model';
+import { DefaultResponse, ErrorResponse, ErrorResponseData } from './model';
 
 export const responseStatus = <T extends DefaultResponse>() => map((response: T): T => {
   if (!response.success) {
+    if ('data' in response) {
+      throw {
+        success: false,
+        statusCode: 500,
+        message: response.message || 'Erro inexperado',
+        data: response.data
+      } as ErrorResponseData<typeof response.data>;
+    }
+
     throw {
       success: false,
       statusCode: 500,
-      message: response.message || 'Erro inexperado'
+      message: response.message || 'Erro inexperado',
     } as ErrorResponse;
   }
 
@@ -28,8 +37,9 @@ export const catchResponse = (err: HttpErrorResponse): Observable<never> => {
   return throwError(() => ({
     success: false,
     statusCode: err.status,
-    message: err.error?.message ?? 'Erro inexperado'
-  }) as ErrorResponse);
+    message: err.error?.message ?? 'Erro inexperado',
+    data: err.error?.data
+  }) as ErrorResponseData<typeof err.error.data>);
 };
 
 export const pipeResponse = <T extends DefaultResponse>() => pipe(
