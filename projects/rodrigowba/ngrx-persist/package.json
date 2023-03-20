@@ -1,6 +1,6 @@
 {
   "name": "@rodrigowba/ngrx-persist",
-  "version": "15.0.1",
+  "version": "15.2.0",
   "schematics": "./collection.json",
   "peerDependencies": {
     "@angular/common": "^15",

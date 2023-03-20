@@ -3,6 +3,10 @@ export interface DefaultResponse {
   message?: string;
 }
 
+export interface ErrorResponse extends DefaultResponse {
+  statusCode: number;
+}
+
 export interface ResponseData<T> extends DefaultResponse {
   data: T;
 }
