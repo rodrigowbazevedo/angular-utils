@@ -4,13 +4,13 @@ import { catchError, map } from 'rxjs/operators';
 
 import { DefaultResponse, ErrorResponse, ErrorResponseData } from './model';
 
-export const responseStatus = <T extends DefaultResponse>() => map((response: T): T => {
+export const responseStatus = <T extends DefaultResponse>(defaultError = 'Erro inesperado') => map((response: T): T => {
   if (!response.success) {
     if ('data' in response) {
       throw {
         success: false,
         statusCode: 500,
-        message: response.message || 'Erro inexperado',
+        message: response?.message ?? defaultError,
         data: response.data
       } as ErrorResponseData<typeof response.data>;
     }
@@ -18,31 +18,31 @@ export const responseStatus = <T extends DefaultResponse>() => map((response: T)
     throw {
       success: false,
       statusCode: 500,
-      message: response.message || 'Erro inexperado',
+      message: response?.message ?? defaultError,
     } as ErrorResponse;
   }
 
   return response;
 });
 
-export const catchResponse = (err: HttpErrorResponse): Observable<never> => {
+export const catchResponse = (err: HttpErrorResponse, defaultError = 'Erro inesperado'): Observable<never> => {
   if (err.error instanceof Error) {
     return throwError(() => ({
       success: false,
       statusCode: 500,
-      message: 'Erro inexperado'
+      message: defaultError
     }) as ErrorResponse);
   }
 
   return throwError(() => ({
     success: false,
     statusCode: err.status,
-    message: err.error?.message ?? 'Erro inexperado',
+    message: err.error?.message ?? defaultError,
     data: err.error?.data
   }) as ErrorResponseData<typeof err.error.data>);
 };
 
-export const pipeResponse = <T extends DefaultResponse>() => pipe(
+export const pipeResponse = <T extends DefaultResponse>(defaultError = 'Erro inesperado') => pipe(
   responseStatus<T>(),
-  catchError(catchResponse)
+  catchError(error => catchResponse(error, defaultError))
 );
